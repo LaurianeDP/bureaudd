@@ -1,0 +1,7 @@
+
+###> symfony/framework-bundle ###
+bureaudd-back/app/config/secrets/prod/prod.decrypt.private.php
+bureaudd-back/app/public/bundles/
+bureaudd-back/app/var/
+bureaudd-back/app/vendor/
+###< symfony/framework-bundle ###
