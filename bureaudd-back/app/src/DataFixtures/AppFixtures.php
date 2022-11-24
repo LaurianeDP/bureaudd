@@ -15,6 +15,8 @@ class AppFixtures extends Fixture
         $admin = UserFactory::createOne();
         $admin->setRoles(['ADMIN']);
 
+        
+
         $manager->flush();
     }
 }

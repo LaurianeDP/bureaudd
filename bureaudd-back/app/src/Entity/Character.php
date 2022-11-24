@@ -16,17 +16,17 @@ class Character
 
     #[ORM\ManyToOne(inversedBy: 'characters')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?user $user_id = null;
+    private ?User $user_id = null;
 
     #[ORM\ManyToOne(inversedBy: 'characters')]
-    private ?campaign $campaign_id = null;
+    private ?Campaign $campaign_id = null;
 
     #[ORM\Column]
     private ?int $level = null;
 
     #[ORM\ManyToOne(inversedBy: 'characters')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?race $race_id = null;
+    private ?Race $race_id = null;
 
     #[ORM\ManyToMany(targetEntity: CharacterClass::class, inversedBy: 'characters')]
     #[ORM\JoinColumn(nullable: false)]

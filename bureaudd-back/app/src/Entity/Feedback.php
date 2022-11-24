@@ -24,7 +24,7 @@ class Feedback
 
     #[ORM\ManyToOne(inversedBy: 'feedback')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?user $user_id = null;
+    private ?User $user_id = null;
 
     public function getId(): ?int
     {

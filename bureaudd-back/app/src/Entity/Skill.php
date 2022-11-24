@@ -31,7 +31,7 @@ class Skill
     #[ORM\ManyToMany(targetEntity: CharacterClass::class, inversedBy: 'skills')]
     private Collection $character_class_id;
 
-    #[ORM\ManyToMany(targetEntity: race::class, inversedBy: 'skills')]
+    #[ORM\ManyToMany(targetEntity: Race::class, inversedBy: 'skills')]
     private Collection $race_id;
 
     #[ORM\ManyToMany(targetEntity: Background::class, inversedBy: 'skills')]

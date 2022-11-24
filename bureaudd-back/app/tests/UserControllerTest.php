@@ -3,6 +3,7 @@
 namespace App\Tests;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\Repository\UserRepository;
 
 class UserControllerTest extends WebTestCase
 {
@@ -14,8 +15,6 @@ class UserControllerTest extends WebTestCase
 
         $response = $client->getResponse()->getContent();
         $totalUsers = $userRepository->findAll();
-
-        dump($response);
 
         $this->assertResponseIsSuccessful();
         $this->assertEquals(count($response), 16);
