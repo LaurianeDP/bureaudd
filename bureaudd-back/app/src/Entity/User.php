@@ -35,6 +35,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user_id', targetEntity: Character::class)]
     private Collection $characters;
 
+    #[ORM\Column(length: 255)]
+    private ?string $username = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $user_mode = null;
+
+    #[ORM\Column]
+    private ?int $creation_date = null;
+
     public function __construct()
     {
         $this->feedback = new ArrayCollection();
@@ -167,6 +176,42 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $character->setUserId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUsername(): ?string
+    {
+        return $this->username;
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    public function getUserMode(): ?string
+    {
+        return $this->user_mode;
+    }
+
+    public function setUserMode(string $user_mode): self
+    {
+        $this->user_mode = $user_mode;
+
+        return $this;
+    }
+
+    public function getCreationDate(): ?int
+    {
+        return $this->creation_date;
+    }
+
+    public function setCreationDate(int $creation_date): self
+    {
+        $this->creation_date = $creation_date;
 
         return $this;
     }
