@@ -4,5 +4,5 @@
 
 return [
     '_preview_error' => [['code', '_format'], ['_controller' => 'error_controller::preview', '_format' => 'html'], ['code' => '\\d+'], [['variable', '.', '[^/]++', '_format', true], ['variable', '/', '\\d+', 'code', true], ['text', '/_error']], [], [], []],
-    'api_users' => [[], ['_controller' => 'App\\Controller\\UserController::getUsers'], [], [['text', '/api/users']], [], [], []],
+    'users' => [[], ['_controller' => 'App\\Controller\\UserController::getUsers'], [], [['text', '/api/users']], [], [], []],
 ];

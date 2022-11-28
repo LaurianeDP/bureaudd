@@ -10,7 +10,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class UserController extends AbstractController
 {
-    #[Route('/api/users', name: 'api_users', methods: ['GET'])]
+    #[Route('/api/users', name: 'users', methods: ['GET'])]
     public function getUsers(UserRepository $userRepository, SerializerInterface $serialiser): JsonResponse
     {
         $users = $userRepository->findAll();
