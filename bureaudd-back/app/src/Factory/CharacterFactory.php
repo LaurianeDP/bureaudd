@@ -3,6 +3,8 @@
 namespace App\Factory;
 
 use App\Entity\Character;
+use App\Entity\User;
+use App\Repository\UserRepository;
 use App\Repository\CharacterRepository;
 use Zenstruck\Foundry\RepositoryProxy;
 use Zenstruck\Foundry\ModelFactory;
@@ -39,9 +41,8 @@ final class CharacterFactory extends ModelFactory
     protected function getDefaults(): array
     {
         return [
-            // TODO add your default values here (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories)
-            'level' => self::faker()->randomNumber(),
-            'active' => self::faker()->boolean(),
+            'level' => self::faker()->randomBetween(1,20),
+            'active' => false,
         ];
     }
 

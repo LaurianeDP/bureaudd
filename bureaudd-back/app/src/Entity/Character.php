@@ -16,21 +16,21 @@ class Character
 
     #[ORM\ManyToOne(inversedBy: 'characters')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $user_id = null;
+    private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'characters')]
-    private ?Campaign $campaign_id = null;
+    private ?Campaign $campaign = null;
 
     #[ORM\Column]
     private ?int $level = null;
 
     #[ORM\ManyToOne(inversedBy: 'characters')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Race $race_id = null;
+    private ?Race $race = null;
 
     #[ORM\ManyToMany(targetEntity: CharacterClass::class, inversedBy: 'characters')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?CharacterClass $character_class_id = null;
+    private ?CharacterClass $character_class = null;
 
     #[ORM\ManyToOne(inversedBy: 'characters')]
     #[ORM\JoinColumn(nullable: false)]
@@ -47,24 +47,24 @@ class Character
         return $this->id;
     }
 
-    public function getUserId(): ?user
+    public function getUser(): ?user
     {
-        return $this->user_id;
+        return $this->user;
     }
 
-    public function setUserId(?user $user_id): self
+    public function setUser(?user $user_id): self
     {
         $this->user_id = $user_id;
 
         return $this;
     }
 
-    public function getCampaignId(): ?campaign
+    public function getCampaign(): ?campaign
     {
         return $this->campaign_id;
     }
 
-    public function setCampaignId(?campaign $campaign_id): self
+    public function setCampaign(?campaign $campaign_id): self
     {
         $this->campaign_id = $campaign_id;
 
@@ -83,24 +83,24 @@ class Character
         return $this;
     }
 
-    public function getRaceId(): ?race
+    public function getRace(): ?race
     {
         return $this->race_id;
     }
 
-    public function setRaceId(?race $race_id): self
+    public function setRace(?race $race_id): self
     {
         $this->race_id = $race_id;
 
         return $this;
     }
 
-    public function getCharacterClassId(): ?CharacterClass
+    public function getCharacterClass(): ?CharacterClass
     {
         return $this->character_class_id;
     }
 
-    public function setCharacterClassId(?CharacterClass $character_class_id): self
+    public function setCharacterClass(?CharacterClass $character_class_id): self
     {
         $this->character_class_id = $character_class_id;
 
