@@ -5,3 +5,9 @@ bureaudd-back/app/public/bundles/
 bureaudd-back/app/var/
 bureaudd-back/app/vendor/
 ###< symfony/framework-bundle ###
+bureaudd-back/mysql/#ib_16384_0.dblwr
+bureaudd-back/app/var/cache/dev/App_KernelDevDebugContainer.php
+bureaudd-back/app/var/cache/dev/annotations.php
+bureaudd-back/app/var/cache/dev/App_KernelDevDebugContainer.xml
+bureaudd-back/app/vendor/composer/autoload_classmap.php
+bureaudd-back/app/vendor/composer/autoload_static.php
