@@ -39,10 +39,10 @@ class Spell
     private ?string $spell_description_long = null;
 
     #[ORM\ManyToMany(targetEntity: Race::class, inversedBy: 'spells')]
-    private Collection $race_id;
+    private Collection $race;
 
     #[ORM\ManyToMany(targetEntity: CharacterClass::class, inversedBy: 'spells')]
-    private Collection $character_class_id;
+    private Collection $character_class;
 
     public function getId(): ?int
     {

@@ -3,10 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\CharacterRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CharacterRepository::class)]
-#[ORM\Table(name: '`character`')]
+#[ORM\Table(name: '`playable_character`')]
 class Character
 {
     #[ORM\Id]
@@ -36,11 +37,17 @@ class Character
     #[ORM\JoinColumn(nullable: false)]
     private ?Background $background = null;
 
-    #[ORM\OneToMany(mappedBy: 'character_id', targetEntity: Note::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'character', targetEntity: Note::class, orphanRemoval: true)]
     private Collection $notes;
 
     #[ORM\Column]
     private ?bool $active = null;
+
+    #[ORM\Column(length: 100)]
+    private ?string $firstName = null;
+
+    #[ORM\Column(length: 200, nullable: true)]
+    private ?string $lastName = null;
 
     public function getId(): ?int
     {
@@ -52,21 +59,21 @@ class Character
         return $this->user;
     }
 
-    public function setUser(?user $user_id): self
+    public function setUser(?user $user): self
     {
-        $this->user_id = $user_id;
+        $this->user = $user;
 
         return $this;
     }
 
     public function getCampaign(): ?campaign
     {
-        return $this->campaign_id;
+        return $this->campaign;
     }
 
-    public function setCampaign(?campaign $campaign_id): self
+    public function setCampaign(?campaign $campaign): self
     {
-        $this->campaign_id = $campaign_id;
+        $this->campaign = $campaign;
 
         return $this;
     }
@@ -85,24 +92,24 @@ class Character
 
     public function getRace(): ?race
     {
-        return $this->race_id;
+        return $this->race;
     }
 
-    public function setRace(?race $race_id): self
+    public function setRace(?race $race): self
     {
-        $this->race_id = $race_id;
+        $this->race = $race;
 
         return $this;
     }
 
     public function getCharacterClass(): ?CharacterClass
     {
-        return $this->character_class_id;
+        return $this->character_class;
     }
 
-    public function setCharacterClass(?CharacterClass $character_class_id): self
+    public function setCharacterClass(?CharacterClass $character_class): self
     {
-        $this->character_class_id = $character_class_id;
+        $this->character_class = $character_class;
 
         return $this;
     }
@@ -127,6 +134,30 @@ class Character
     public function setActive(bool $active): self
     {
         $this->active = $active;
+
+        return $this;
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(string $firstName): self
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(?string $lastName): self
+    {
+        $this->lastName = $lastName;
 
         return $this;
     }

@@ -18,7 +18,7 @@ class Campaign
     #[ORM\Column(length: 255)]
     private ?string $campaign_name = null;
 
-    #[ORM\OneToMany(mappedBy: 'campaign_id', targetEntity: Character::class)]
+    #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: Character::class)]
     private Collection $characters;
 
     public function __construct()

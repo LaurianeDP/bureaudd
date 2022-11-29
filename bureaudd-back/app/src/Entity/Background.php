@@ -21,7 +21,7 @@ class Background
     #[ORM\OneToMany(mappedBy: 'background', targetEntity: Character::class)]
     private Collection $characters;
 
-    #[ORM\ManyToMany(targetEntity: Skill::class, mappedBy: 'background_id')]
+    #[ORM\ManyToMany(targetEntity: Skill::class, mappedBy: 'background')]
     private Collection $skills;
 
     public function __construct()

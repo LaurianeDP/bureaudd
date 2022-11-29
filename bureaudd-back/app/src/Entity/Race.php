@@ -18,13 +18,13 @@ class Race
     #[ORM\Column(length: 255)]
     private ?string $race_name = null;
 
-    #[ORM\OneToMany(mappedBy: 'race_id', targetEntity: Character::class)]
+    #[ORM\OneToMany(mappedBy: 'race', targetEntity: Character::class)]
     private Collection $characters;
 
-    #[ORM\ManyToMany(targetEntity: Skill::class, mappedBy: 'race_id')]
+    #[ORM\ManyToMany(targetEntity: Skill::class, mappedBy: 'race')]
     private Collection $skills;
 
-    #[ORM\ManyToMany(targetEntity: Spell::class, mappedBy: 'race_id')]
+    #[ORM\ManyToMany(targetEntity: Spell::class, mappedBy: 'race')]
     private Collection $spells;
 
     public function __construct()

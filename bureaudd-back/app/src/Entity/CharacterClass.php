@@ -21,13 +21,13 @@ class CharacterClass
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $subclass = null;
 
-    #[ORM\ManyToMany(targetEntity: Character::class, mappedBy: 'character_class_id')]
+    #[ORM\ManyToMany(targetEntity: Character::class, mappedBy: 'character_class')]
     private Collection $characters;
 
-    #[ORM\ManyToMany(targetEntity: Skill::class, mappedBy: 'character_class_id')]
+    #[ORM\ManyToMany(targetEntity: Skill::class, mappedBy: 'character_class')]
     private Collection $skills;
 
-    #[ORM\ManyToMany(targetEntity: Spell::class, mappedBy: 'character_class_id')]
+    #[ORM\ManyToMany(targetEntity: Spell::class, mappedBy: 'character_class')]
     private Collection $spells;
 
     public function __construct()

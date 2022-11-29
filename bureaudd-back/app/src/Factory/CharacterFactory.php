@@ -3,8 +3,6 @@
 namespace App\Factory;
 
 use App\Entity\Character;
-use App\Entity\User;
-use App\Repository\UserRepository;
 use App\Repository\CharacterRepository;
 use Zenstruck\Foundry\RepositoryProxy;
 use Zenstruck\Foundry\ModelFactory;
@@ -41,7 +39,9 @@ final class CharacterFactory extends ModelFactory
     protected function getDefaults(): array
     {
         return [
-            'level' => self::faker()->randomBetween(1,20),
+            'level' => self::faker()->numberBetween(1,20),
+            'firstName' => self::faker()->firstName(),
+            'lastName' => self::faker()->colorName(),
             'active' => false,
         ];
     }

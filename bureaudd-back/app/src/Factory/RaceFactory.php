@@ -39,8 +39,7 @@ final class RaceFactory extends ModelFactory
     protected function getDefaults(): array
     {
         return [
-            // TODO add your default values here (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories)
-            'race_name' => self::faker()->text(),
+            'race_name' => self::faker()->text(5),
         ];
     }
 

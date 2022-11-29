@@ -29,18 +29,18 @@ class Skill
     private ?string $skill_description_long = null;
 
     #[ORM\ManyToMany(targetEntity: CharacterClass::class, inversedBy: 'skills')]
-    private Collection $character_class_id;
+    private Collection $character_class;
 
     #[ORM\ManyToMany(targetEntity: Race::class, inversedBy: 'skills')]
-    private Collection $race_id;
+    private Collection $race;
 
     #[ORM\ManyToMany(targetEntity: Background::class, inversedBy: 'skills')]
-    private Collection $background_id;
+    private Collection $background;
 
     public function __construct()
     {
-        $this->character_class_id = new ArrayCollection();
-        $this->race_id = new ArrayCollection();
+        $this->character_class = new ArrayCollection();
+        $this->race = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -101,21 +101,21 @@ class Skill
      */
     public function getCharacterClassId(): Collection
     {
-        return $this->character_class_id;
+        return $this->character_class;
     }
 
-    public function addCharacterClassId(CharacterClass $characterClassId): self
+    public function addCharacterClassId(CharacterClass $characterClass): self
     {
-        if (!$this->character_class_id->contains($characterClassId)) {
-            $this->character_class_id->add($characterClassId);
+        if (!$this->character_class->contains($characterClass)) {
+            $this->character_class->add($characterClass);
         }
 
         return $this;
     }
 
-    public function removeCharacterClassId(CharacterClass $characterClassId): self
+    public function removeCharacterClassId(CharacterClass $characterClass): self
     {
-        $this->character_class_id->removeElement($characterClassId);
+        $this->character_class->removeElement($characterClass);
 
         return $this;
     }
@@ -125,21 +125,21 @@ class Skill
      */
     public function getRaceId(): Collection
     {
-        return $this->race_id;
+        return $this->race;
     }
 
-    public function addRaceId(race $raceId): self
+    public function addRaceId(race $race): self
     {
-        if (!$this->race_id->contains($raceId)) {
-            $this->race_id->add($raceId);
+        if (!$this->race->contains($race)) {
+            $this->race->add($race);
         }
 
         return $this;
     }
 
-    public function removeRaceId(race $raceId): self
+    public function removeRaceId(race $race): self
     {
-        $this->race_id->removeElement($raceId);
+        $this->race->removeElement($race);
 
         return $this;
     }
@@ -149,21 +149,21 @@ class Skill
      */
     public function getBackgroundId(): Collection
     {
-        return $this->background_id;
+        return $this->background;
     }
 
-    public function addBackgroundId(background $backgroundId): self
+    public function addBackgroundId(background $background): self
     {
-        if (!$this->background_id->contains($backgroundId)) {
-            $this->background_id->add($backgroundId);
+        if (!$this->background->contains($background)) {
+            $this->background->add($background);
         }
 
         return $this;
     }
 
-    public function removeBackgroundId(background $backgroundId): self
+    public function removeBackgroundId(background $background): self
     {
-        $this->background_id->removeElement($backgroundId);
+        $this->background->removeElement($background);
 
         return $this;
     }

@@ -237,7 +237,9 @@
         <argument type="service" id=".service_locator.jIxfAsi.App\Controller\UserController"/>
       </call>
     </service>
-    <service id="App\DataFixtures\AppFixtures" class="App\DataFixtures\AppFixtures" autowire="true" autoconfigure="true"/>
+    <service id="App\DataFixtures\AppFixtures" class="App\DataFixtures\AppFixtures" autowire="true" autoconfigure="true">
+      <tag name="doctrine.fixture.orm"/>
+    </service>
     <service id="App\Factory\BackgroundFactory" class="App\Factory\BackgroundFactory" autowire="true" autoconfigure="true">
       <tag name="foundry.factory"/>
     </service>
@@ -3378,7 +3380,12 @@
     <service id="doctrine.fixtures.loader" class="Doctrine\Bundle\FixturesBundle\Loader\SymfonyFixturesLoader">
       <argument type="service" id="service_container"/>
       <call method="addFixtures">
-        <argument type="collection"/>
+        <argument type="collection">
+          <argument type="collection">
+            <argument key="fixture" type="service" id="App\DataFixtures\AppFixtures"/>
+            <argument key="groups" type="collection"/>
+          </argument>
+        </argument>
       </call>
     </service>
     <service id="doctrine.fixtures.purger.orm_purger_factory" class="Doctrine\Bundle\FixturesBundle\Purger\ORMPurgerFactory">
@@ -3507,6 +3514,8 @@
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\UserController" class="App\Controller\UserController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\UserController" class="App\Controller\UserController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\UserController" class="App\Controller\UserController" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\FixturesBundle\ORMFixtureInterface.0.App\DataFixtures\AppFixtures" class="App\DataFixtures\AppFixtures" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\DataFixtures\AppFixtures" class="App\DataFixtures\AppFixtures" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Zenstruck\Foundry\ModelFactory.0.App\Factory\BackgroundFactory" class="App\Factory\BackgroundFactory" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Factory\BackgroundFactory" class="App\Factory\BackgroundFactory" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Zenstruck\Foundry\ModelFactory.0.App\Factory\CampaignFactory" class="App\Factory\CampaignFactory" autowire="true" abstract="true"/>

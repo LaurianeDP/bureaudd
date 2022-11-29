@@ -29,10 +29,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\OneToMany(mappedBy: 'user_id', targetEntity: Feedback::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Feedback::class, orphanRemoval: true)]
     private Collection $feedback;
 
-    #[ORM\OneToMany(mappedBy: 'user_id', targetEntity: Character::class)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Character::class)]
     private Collection $characters;
 
     #[ORM\Column(length: 255)]
