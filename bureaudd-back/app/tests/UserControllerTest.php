@@ -52,6 +52,11 @@ class UserControllerTest extends WebTestCase
         
         $allUsers = $userRepository->findAll();
         $randomUser = $allUsers[array_rand($allUsers)];
+        
+        do {
+            $randomUser = $allUsers[array_rand($allUsers)];
+        } while (count($randomUser->getCharacters()) === 0);
+        
         $randomUserCharacters = count($randomUser->getCharacters());
         
         $crawler = $client->request('GET', 'api/users/'.$randomUser->getId().'/characters');

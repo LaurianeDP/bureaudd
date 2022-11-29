@@ -4,7 +4,9 @@ namespace App\Entity;
 
 use App\Repository\CharacterRepository;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CharacterRepository::class)]
 #[ORM\Table(name: '`playable_character`')]
@@ -13,41 +15,53 @@ class Character
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(["getCharacters", "getUsers"])]
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'characters')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[Groups(["getCharacters"])]
     private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'characters')]
+    #[Groups(["getCharacters", "getUsers"])]
     private ?Campaign $campaign = null;
 
     #[ORM\Column]
+    #[Groups(["getCharacters", "getUsers"])]
     private ?int $level = null;
 
     #[ORM\ManyToOne(inversedBy: 'characters')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[Groups(["getCharacters", "getUsers"])]
     private ?Race $race = null;
 
-    #[ORM\ManyToMany(targetEntity: CharacterClass::class, inversedBy: 'characters')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?CharacterClass $character_class = null;
+    #[ORM\ManyToMany(targetEntity: CharacterClass::class, mappedBy: 'characters')]
+    #[Groups(["getCharacters", "getUsers"])]
+    private Collection $characterClasses;
 
     #[ORM\ManyToOne(inversedBy: 'characters')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[Groups(["getCharacters", "getUsers"])]
     private ?Background $background = null;
 
     #[ORM\OneToMany(mappedBy: 'character', targetEntity: Note::class, orphanRemoval: true)]
+    // #[Groups(["getCharacters", "getUsers"])]
     private Collection $notes;
 
     #[ORM\Column]
+    #[Groups(["getCharacters", "getUsers"])]
     private ?bool $active = null;
 
     #[ORM\Column(length: 100)]
+    #[Groups(["getCharacters", "getUsers"])]
     private ?string $firstName = null;
 
     #[ORM\Column(length: 200, nullable: true)]
+    #[Groups(["getCharacters", "getUsers"])]
     private ?string $lastName = null;
+
+    public function __construct()
+    {
+        $this->characterClasses = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -102,14 +116,28 @@ class Character
         return $this;
     }
 
-    public function getCharacterClass(): ?CharacterClass
+    /**
+     * @return Collection<int, CharacterClass>
+     */
+    public function getCharacterClasses(): Collection
     {
-        return $this->character_class;
+        return $this->characterClasses;
     }
 
-    public function setCharacterClass(?CharacterClass $character_class): self
+    public function addCharacterClass(CharacterClass $characterClass): self
     {
-        $this->character_class = $character_class;
+        if (!$this->characterClasses->contains($characterClass)) {
+            $this->characterClasses->add($characterClass);
+        }
+
+        return $this;
+    }
+
+    public function removeCharacterClass(CharacterClass $characterClass): self
+    {
+        if ($this->characterClasses->removeElement($characterClass)) {
+            $characterClass->removeCharacterId($this);
+        }
 
         return $this;
     }

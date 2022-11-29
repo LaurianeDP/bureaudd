@@ -6,6 +6,7 @@ use App\Repository\BackgroundRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: BackgroundRepository::class)]
 class Background
@@ -13,9 +14,11 @@ class Background
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(["getCharacters"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["getCharacters"])]
     private ?string $background_name = null;
 
     #[ORM\OneToMany(mappedBy: 'background', targetEntity: Character::class)]

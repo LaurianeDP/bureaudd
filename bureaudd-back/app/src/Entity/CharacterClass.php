@@ -6,6 +6,7 @@ use App\Repository\CharacterClassRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CharacterClassRepository::class)]
 class CharacterClass
@@ -13,21 +14,26 @@ class CharacterClass
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(["getCharacters"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["getCharacters"])]
     private ?string $class_name = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["getCharacters"])]
     private ?string $subclass = null;
 
-    #[ORM\ManyToMany(targetEntity: Character::class, mappedBy: 'character_class')]
+    #[ORM\ManyToMany(targetEntity: Character::class, inversedBy: 'characterClasses')]
     private Collection $characters;
 
-    #[ORM\ManyToMany(targetEntity: Skill::class, mappedBy: 'character_class')]
+    #[ORM\ManyToMany(targetEntity: Skill::class, mappedBy: 'characterClasses')]
+    #[Groups(["getCharacters"])]
     private Collection $skills;
 
-    #[ORM\ManyToMany(targetEntity: Spell::class, mappedBy: 'character_class')]
+    #[ORM\ManyToMany(targetEntity: Spell::class, mappedBy: 'characterClasses')]
+    #[Groups(["getCharacters"])]
     private Collection $spells;
 
     public function __construct()
@@ -83,14 +89,9 @@ class CharacterClass
         return $this;
     }
 
-    public function removeCharacter(Character $character): self
+    public function removeCharacterId(Character $character): self
     {
-        if ($this->characters->removeElement($character)) {
-            // set the owning side to null (unless already changed)
-            if ($character->getCharacterClassId() === $this) {
-                $character->setCharacterClassId(null);
-            }
-        }
+        $this->characters->removeElement($character);
 
         return $this;
     }

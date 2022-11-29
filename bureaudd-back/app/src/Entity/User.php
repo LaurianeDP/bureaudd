@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -15,33 +16,42 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(["getUsers", "getCharacters"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Groups(["getUsers"])]
     private ?string $email = null;
 
     #[ORM\Column]
+    #[Groups(["getUsers"])]
     private array $roles = [];
 
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Groups(["getUsers"])]
     private ?string $password = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Feedback::class, orphanRemoval: true)]
+    #[Groups(["getUsers"])]
     private Collection $feedback;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Character::class)]
+    #[Groups(["getUsers"])]
     private Collection $characters;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["getUsers", "getCharacters"])]
     private ?string $username = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["getUsers"])]
     private ?string $user_mode = null;
 
     #[ORM\Column]
+    #[Groups(["getUsers"])]
     private ?int $creation_date = null;
 
     public function __construct()

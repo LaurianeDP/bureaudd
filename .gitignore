@@ -11,3 +11,5 @@ bureaudd-back/app/var/cache/dev/annotations.php
 bureaudd-back/app/var/cache/dev/App_KernelDevDebugContainer.xml
 bureaudd-back/app/vendor/composer/autoload_classmap.php
 bureaudd-back/app/vendor/composer/autoload_static.php
+bureaudd-back/mysql/mysql
+bureaudd-back/app/var/cache/

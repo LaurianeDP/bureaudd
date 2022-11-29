@@ -7,5 +7,6 @@
 /mysql/
 /public/bundles/
 app/var/
+app/var/cache
 app/vendor/
 ###< symfony/framework-bundle ###

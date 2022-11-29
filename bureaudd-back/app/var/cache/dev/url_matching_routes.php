@@ -20,15 +20,19 @@ return [
                 .'|/_error/(\\d+)(?:\\.([^/]++))?(*:35)'
                 .'|/api/(?'
                     .'|characters/([^/]++)(*:69)'
-                    .'|users/([^/]++)(*:90)'
+                    .'|users/([^/]++)(?'
+                        .'|(*:93)'
+                        .'|/characters(*:111)'
+                    .')'
                 .')'
             .')/?$}sDu',
     ],
     [ // $dynamicRoutes
         35 => [[['_route' => '_preview_error', '_controller' => 'error_controller::preview', '_format' => 'html'], ['code', '_format'], null, null, false, true, null]],
         69 => [[['_route' => 'api_character', '_controller' => 'App\\Controller\\CharacterController::getOneCharacter'], ['characterId'], ['GET' => 0], null, false, true, null]],
-        90 => [
-            [['_route' => 'api_user', '_controller' => 'App\\Controller\\UserController::getOneUser'], ['userId'], ['GET' => 0], null, false, true, null],
+        93 => [[['_route' => 'api_user', '_controller' => 'App\\Controller\\UserController::getOneUser'], ['userId'], ['GET' => 0], null, false, true, null]],
+        111 => [
+            [['_route' => 'api_user_characters', '_controller' => 'App\\Controller\\UserController::getCharactersOfOneUser'], ['userId'], ['GET' => 0], null, false, false, null],
             [null, null, null, null, false, false, 0],
         ],
     ],

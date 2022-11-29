@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\UserRepository;
+use App\Repository\CharacterRepository;
 use App\Entity\User;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -19,7 +20,7 @@ class UserController extends AbstractController
     public function getUsers(UserRepository $userRepository, SerializerInterface $serialiser): JsonResponse
     {
         $users = $userRepository->findAll();
-        $JsonUsersList = $serialiser->serialize($users, 'json');
+        $JsonUsersList = $serialiser->serialize($users, 'json', ['groups' => 'getUsers']);
         return new JsonResponse([
             'data' => json_decode($JsonUsersList),
             'total' => count($users),
@@ -30,10 +31,22 @@ class UserController extends AbstractController
     #[ParamConverter('user', options: ['mapping' => ['userId' => 'id']])]
     public function getOneUser(SerializerInterface $serialiser, User $user): JsonResponse
     {
-        $JsonUser = $serialiser->serialize($user, 'json');
+        $JsonUser = $serialiser->serialize($user, 'json', ['groups' => 'getUsers']);
         return new JsonResponse([
             'data' => json_decode($JsonUser),
             'total' => 1,
+        ], Response::HTTP_OK, ['accept' => 'json']);
+    }
+
+    #[Route('/api/users/{userId}/characters', name: 'api_user_characters', requirements: ['id' => '\d+'], methods: ['GET'])]
+    #[ParamConverter('user', options: ['mapping' => ['userId' => 'id']])]
+    public function getCharactersOfOneUser(SerializerInterface $serialiser, User $user, CharacterRepository $characterRepository): JsonResponse
+    {
+        $userCharacters = $characterRepository->findBy(['user' => $user]);
+        $JsonUser = $serialiser->serialize($userCharacters, 'json', ['groups' => 'getCharacters']);
+        return new JsonResponse([
+            'data' => json_decode($JsonUser),
+            'total' => count($userCharacters),
         ], Response::HTTP_OK, ['accept' => 'json']);
     }
 }

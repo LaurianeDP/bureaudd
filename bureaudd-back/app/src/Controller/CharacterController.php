@@ -12,6 +12,7 @@ use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 use App\Repository\CharacterRepository;
 use App\Entity\Character;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 class CharacterController extends AbstractController
 {
@@ -19,7 +20,7 @@ class CharacterController extends AbstractController
     public function getCharacters(CharacterRepository $characterRepository, SerializerInterface $serialiser): JsonResponse
     {
         $characters = $characterRepository->findAll();
-        $JsonCharactersList = $serialiser->serialize($characters, 'json');
+        $JsonCharactersList = $serialiser->serialize($characters, 'json', ['groups' => 'getCharacters']);
         return new JsonResponse([
             'data' => json_decode($JsonCharactersList),
             'total' => count($characters),
@@ -30,7 +31,7 @@ class CharacterController extends AbstractController
     #[ParamConverter('character', options: ['mapping' => ['characterId' => 'id']])]
     public function getOneCharacter(SerializerInterface $serialiser, Character $character): JsonResponse
     {
-        $JsonCharacter = $serialiser->serialize($character, 'json');
+        $JsonCharacter = $serialiser->serialize($character, 'json', ['groups' => 'getCharacters']);
         return new JsonResponse([
             'data' => json_decode($JsonCharacter),
             'total' => 1,
