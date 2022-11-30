@@ -23,7 +23,7 @@ class Character
     private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'characters')]
-    #[Groups(["getCharacters", "getUsers"])]
+    #[Groups(["getCharacters"])]
     private ?Campaign $campaign = null;
 
     #[ORM\Column]
@@ -31,16 +31,12 @@ class Character
     private ?int $level = null;
 
     #[ORM\ManyToOne(inversedBy: 'characters')]
-    #[Groups(["getCharacters", "getUsers"])]
+    #[Groups(["getCharacters"])]
     private ?Race $race = null;
 
     #[ORM\ManyToOne(inversedBy: 'characters')]
-    #[Groups(["getCharacters", "getUsers"])]
+    #[Groups(["getCharacters"])]
     private ?Background $background = null;
-
-    #[ORM\OneToMany(mappedBy: 'character', targetEntity: Note::class, orphanRemoval: true)]
-    // #[Groups(["getCharacters", "getUsers"])]
-    private Collection $notes;
 
     #[ORM\Column]
     #[Groups(["getCharacters", "getUsers"])]
@@ -62,9 +58,14 @@ class Character
     #[Groups(["getCharacters"])]
     private Collection $characterClass;
 
+    #[ORM\OneToMany(mappedBy: 'characterAssociated', targetEntity: Note::class, orphanRemoval: true)]
+    #[Groups(["getCharacters"])]
+    private Collection $notes;
+
     public function __construct()
     {
         $this->characterClass = new ArrayCollection();
+        $this->notes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -200,6 +201,36 @@ class Character
     public function removeCharacterClass(CharacterClass $characterClass): self
     {
         $this->characterClass->removeElement($characterClass);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Note>
+     */
+    public function getNotes(): Collection
+    {
+        return $this->notes;
+    }
+
+    public function addNote(Note $note): self
+    {
+        if (!$this->notes->contains($note)) {
+            $this->notes->add($note);
+            $note->setCharacterAssociated($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNote(Note $note): self
+    {
+        if ($this->notes->removeElement($note)) {
+            // set the owning side to null (unless already changed)
+            if ($note->getCharacterAssociated() === $this) {
+                $note->setCharacterAssociated(null);
+            }
+        }
 
         return $this;
     }

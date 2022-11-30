@@ -39,9 +39,8 @@ final class FaqFactory extends ModelFactory
     protected function getDefaults(): array
     {
         return [
-            // TODO add your default values here (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories)
-            'question' => self::faker()->text(),
-            'answer' => self::faker()->text(),
+            'question' => self::faker()->word(5),
+            'answer' => self::faker()->text(60),
         ];
     }
 

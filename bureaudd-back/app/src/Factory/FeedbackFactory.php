@@ -40,9 +40,9 @@ final class FeedbackFactory extends ModelFactory
     {
         return [
             // TODO add your default values here (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories)
-            'feedback_date' => self::faker()->randomNumber(),
-            'feedback_type' => self::faker()->text(),
-            'feedback_content' => self::faker()->text(),
+            'feedback_date' => self::faker()->unixTime(),
+            'feedback_type' => self::faker()->randomElement(['feedback', 'bugReport']),
+            'feedback_content' => self::faker()->text(150),
         ];
     }
 

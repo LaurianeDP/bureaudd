@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\FeedbackRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: FeedbackRepository::class)]
 class Feedback
@@ -11,12 +12,15 @@ class Feedback
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(["getUsers"])]
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Groups(["getUsers"])]
     private ?int $feedback_date = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["getUsers"])]
     private ?string $feedback_type = null;
 
     #[ORM\Column(length: 255)]
@@ -67,12 +71,12 @@ class Feedback
         return $this;
     }
 
-    public function getUserId(): ?user
+    public function getUser(): ?user
     {
         return $this->user;
     }
 
-    public function setUserId(?user $user): self
+    public function setUser(?user $user): self
     {
         $this->user = $user;
 

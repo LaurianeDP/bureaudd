@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\NoteRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: NoteRepository::class)]
 class Note
@@ -12,21 +13,23 @@ class Note
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(["getCharacters"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["getCharacters"])]
     private ?string $title = null;
 
     #[ORM\Column]
+    #[Groups(["getCharacters"])]
     private ?int $note_date = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $note_content = null;
 
-    
-    #[ORM\ManyToOne(inversedBy: 'note')]
+    #[ORM\ManyToOne(inversedBy: 'notes')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Character $character = null;
+    private ?Character $characterAssociated = null;
 
     public function getId(): ?int
     {
@@ -65,6 +68,18 @@ class Note
     public function setNoteContent(string $note_content): self
     {
         $this->note_content = $note_content;
+
+        return $this;
+    }
+
+    public function getCharacterAssociated(): ?Character
+    {
+        return $this->characterAssociated;
+    }
+
+    public function setCharacterAssociated(?Character $characterAssociated): self
+    {
+        $this->characterAssociated = $characterAssociated;
 
         return $this;
     }

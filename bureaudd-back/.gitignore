@@ -9,4 +9,5 @@
 app/var/
 app/var/cache
 app/vendor/
+app/src/
 ###< symfony/framework-bundle ###

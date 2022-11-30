@@ -39,10 +39,9 @@ final class NoteFactory extends ModelFactory
     protected function getDefaults(): array
     {
         return [
-            // TODO add your default values here (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories)
-            'title' => self::faker()->text(),
-            'note_date' => self::faker()->randomNumber(),
-            'note_content' => self::faker()->text(),
+            'title' => self::faker()->word(5),
+            'note_date' => self::faker()->unixTime(),
+            'note_content' => self::faker()->text(100),
         ];
     }
 

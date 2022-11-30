@@ -6,6 +6,7 @@ use App\Repository\CampaignRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CampaignRepository::class)]
 class Campaign
@@ -13,9 +14,11 @@ class Campaign
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(["getCharacters"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["getCharacters"])]
     private ?string $campaign_name = null;
 
     #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: Character::class)]
