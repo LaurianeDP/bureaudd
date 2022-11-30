@@ -3,8 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\SpellRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: SpellRepository::class)]
 class Spell
@@ -38,11 +40,18 @@ class Spell
     #[ORM\Column(type: Types::TEXT)]
     private ?string $spell_description_long = null;
 
+    #[ORM\ManyToMany(targetEntity: CharacterClass::class, inversedBy: 'spells')]
+    private Collection $characterClass;
+
     #[ORM\ManyToMany(targetEntity: Race::class, inversedBy: 'spells')]
     private Collection $race;
 
-    #[ORM\ManyToMany(targetEntity: CharacterClass::class, inversedBy: 'spells')]
-    private Collection $characterClass;
+
+    public function __construct()
+    {
+        $this->characterClass = new ArrayCollection();
+        $this->race = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -144,4 +153,54 @@ class Spell
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, CharacterClass>
+     */
+    public function getCharacterClass(): Collection
+    {
+        return $this->characterClass;
+    }
+
+    public function addCharacterClass(CharacterClass $characterClass): self
+    {
+        if (!$this->characterClass->contains($characterClass)) {
+            $this->characterClass->add($characterClass);
+        }
+
+        return $this;
+    }
+
+    public function removeCharacterClass(CharacterClass $characterClass): self
+    {
+        $this->characterClass->removeElement($characterClass);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Race>
+     */
+    public function getRace(): Collection
+    {
+        return $this->race;
+    }
+
+    public function addRace(Race $race): self
+    {
+        if (!$this->race->contains($race)) {
+            $this->race->add($race);
+        }
+
+        return $this;
+    }
+
+    public function removeRace(Race $race): self
+    {
+        $this->race->removeElement($race);
+
+        return $this;
+    }
+
+    
 }

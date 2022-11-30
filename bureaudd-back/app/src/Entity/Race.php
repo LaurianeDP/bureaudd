@@ -34,6 +34,7 @@ class Race
     {
         $this->characters = new ArrayCollection();
         $this->skills = new ArrayCollection();
+        $this->spells = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -111,7 +112,7 @@ class Race
     }
 
     /**
-     * @return Collection<int, spell>
+     * @return Collection<int, Spell>
      */
     public function getSpells(): Collection
     {
@@ -122,7 +123,7 @@ class Race
     {
         if (!$this->spells->contains($spell)) {
             $this->spells->add($spell);
-            $spell->addRaceId($this);
+            $spell->addRace($this);
         }
 
         return $this;
@@ -131,9 +132,10 @@ class Race
     public function removeSpell(Spell $spell): self
     {
         if ($this->spells->removeElement($spell)) {
-            $spell->removeRaceId($this);
+            $spell->removeRace($this);
         }
 
         return $this;
     }
+
 }

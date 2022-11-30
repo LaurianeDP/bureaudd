@@ -40,10 +40,10 @@ final class SkillFactory extends ModelFactory
     {
         return [
             // TODO add your default values here (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories)
-            'skill_name' => self::faker()->text(),
-            'skill_level' => self::faker()->randomNumber(),
-            'skill_description_short' => self::faker()->text(),
-            'skill_description_long' => self::faker()->text(),
+            'skill_name' => 'skill '.self::faker()->colorName(),
+            'skill_level' => self::faker()->numberBetween(1, 20),
+            'skill_description_short' => self::faker()->text(30),
+            'skill_description_long' => self::faker()->text(100),
         ];
     }
 

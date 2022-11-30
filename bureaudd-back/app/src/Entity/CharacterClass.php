@@ -29,17 +29,17 @@ class CharacterClass
     #[Groups(["getCharacters"])]
     private Collection $skills;
 
-    #[ORM\ManyToMany(targetEntity: Spell::class, mappedBy: 'characterClass')]
-    #[Groups(["getCharacters"])]
-    private Collection $spells;
-
     #[ORM\ManyToMany(targetEntity: Character::class, mappedBy: 'characterClass')]
     private Collection $characters;
+
+    #[ORM\ManyToMany(targetEntity: Spell::class, mappedBy: 'characterClass')]
+    private Collection $spells;
 
     public function __construct()
     {
         $this->characters = new ArrayCollection();
         $this->skills = new ArrayCollection();
+        $this->spells = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -100,33 +100,6 @@ class CharacterClass
     }
 
     /**
-     * @return Collection<int, Spell>
-     */
-    public function getSpells(): Collection
-    {
-        return $this->spells;
-    }
-
-    public function addSpell(Spell $spell): self
-    {
-        if (!$this->spells->contains($spell)) {
-            $this->spells->add($spell);
-            $spell->addCharacterClassId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSpell(Spell $spell): self
-    {
-        if ($this->spells->removeElement($spell)) {
-            $spell->removeCharacterClassId($this);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, Character>
      */
     public function getCharacters(): Collection
@@ -148,6 +121,33 @@ class CharacterClass
     {
         if ($this->characters->removeElement($character)) {
             $character->removeCharacterClass($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Spell>
+     */
+    public function getSpells(): Collection
+    {
+        return $this->spells;
+    }
+
+    public function addSpell(Spell $spell): self
+    {
+        if (!$this->spells->contains($spell)) {
+            $this->spells->add($spell);
+            $spell->addCharacterClass($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSpell(Spell $spell): self
+    {
+        if ($this->spells->removeElement($spell)) {
+            $spell->removeCharacterClass($this);
         }
 
         return $this;

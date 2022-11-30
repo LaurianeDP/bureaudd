@@ -13,6 +13,9 @@ use App\Factory\CampaignFactory;
 use App\Factory\FaqFactory;
 use App\Factory\FeedbackFactory;
 use App\Factory\NoteFactory;
+use App\Factory\TransformationFactory;
+use App\Factory\SkillFactory;
+use App\Factory\SpellFactory;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -55,7 +58,41 @@ class AppFixtures extends Fixture
             ];
         });
 
+        $allSkills = SkillFactory::createMany(50);
+
+        foreach($allSkills as $skill) {
+            $fields = ['characterClass', 'race', 'background'];
+            $field = $fields[array_rand($fields)];
+            switch($field) {
+                case 'characterClass':
+                    $skill->addCharacterClass(CharacterClassFactory::random()->object());
+                    break;
+                case 'race':
+                    $skill->addRace(RaceFactory::random()->object());
+                    break;
+                case 'background':
+                    $skill->addBackground(BackgroundFactory::random()->object());
+                    break;
+            }
+        }
+
+        $allSpells = SpellFactory::createMany(50);
+
+        foreach($allSpells as $spell) {
+            $fields = ['characterClass', 'race'];
+            $field = $fields[array_rand($fields)];
+            switch($field) {
+                case 'characterClass':
+                    $spell->addCharacterClass(CharacterClassFactory::random()->object());
+                    break;
+                case 'race':
+                    $spell->addRace(RaceFactory::random()->object());
+                    break;
+            }
+        }
+
         FaqFactory::createMany(8);
+        TransformationFactory::createMany(20);
 
         $manager->flush();
     }

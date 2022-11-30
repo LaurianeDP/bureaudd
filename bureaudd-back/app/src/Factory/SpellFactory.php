@@ -40,14 +40,14 @@ final class SpellFactory extends ModelFactory
     {
         return [
             // TODO add your default values here (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories)
-            'spell_name' => self::faker()->text(),
-            'spell_level' => self::faker()->randomNumber(),
-            'incantation_duration' => self::faker()->text(),
+            'spell_name' => 'spell '.self::faker()->colorName(),
+            'spell_level' => self::faker()->numberBetween(0, 9),
+            'incantation_duration' => self::faker()->randomElement(['action', 'bonus action', '5 minutes', '1 hour']),
             'concentration' => self::faker()->boolean(),
-            'spell_range' => self::faker()->text(),
+            'spell_range' => self::faker()->randomElement(['touch', '5ft', '50ft']),
             'ritual' => self::faker()->boolean(),
-            'spell_description_short' => self::faker()->text(),
-            'spell_description_long' => self::faker()->text(),
+            'spell_description_short' => self::faker()->text(30),
+            'spell_description_long' => self::faker()->text(80),
         ];
     }
 

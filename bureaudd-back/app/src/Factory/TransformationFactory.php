@@ -40,11 +40,11 @@ final class TransformationFactory extends ModelFactory
     {
         return [
             // TODO add your default values here (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories)
-            'transformation_name' => self::faker()->text(),
-            'size' => self::faker()->text(),
-            'armor_class' => self::faker()->randomNumber(),
-            'power' => self::faker()->text(),
-            'transformation_description' => self::faker()->text(),
+            'transformation_name' => self::faker()->colorName()."_".self::faker()->colorName(),
+            'size' => self::faker()->randomElement(['very small', 'small', 'normal', 'large', 'very large']),
+            'armor_class' => self::faker()->numberBetween(4, 18),
+            'power' => self::faker()->randomElement(['1/2', '1/4', '1/8', '1', '2', '3', '4']),
+            'transformation_description' => self::faker()->text(50),
         ];
     }
 

@@ -41,6 +41,7 @@ class Skill
     {
         $this->characterClass = new ArrayCollection();
         $this->race = new ArrayCollection();
+        $this->background = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -99,12 +100,12 @@ class Skill
     /**
      * @return Collection<int, CharacterClass>
      */
-    public function getCharacterClassId(): Collection
+    public function getCharacterClass(): Collection
     {
         return $this->characterClass;
     }
 
-    public function addCharacterClassId(CharacterClass $characterClass): self
+    public function addCharacterClass(CharacterClass $characterClass): self
     {
         if (!$this->characterClass->contains($characterClass)) {
             $this->characterClass->add($characterClass);
@@ -113,7 +114,7 @@ class Skill
         return $this;
     }
 
-    public function removeCharacterClassId(CharacterClass $characterClass): self
+    public function removeCharacterClass(CharacterClass $characterClass): self
     {
         $this->characterClass->removeElement($characterClass);
 
@@ -123,12 +124,12 @@ class Skill
     /**
      * @return Collection<int, race>
      */
-    public function getRaceId(): Collection
+    public function getRace(): Collection
     {
         return $this->race;
     }
 
-    public function addRaceId(race $race): self
+    public function addRace(race $race): self
     {
         if (!$this->race->contains($race)) {
             $this->race->add($race);
@@ -137,7 +138,7 @@ class Skill
         return $this;
     }
 
-    public function removeRaceId(race $race): self
+    public function removeRace(race $race): self
     {
         $this->race->removeElement($race);
 
@@ -147,12 +148,12 @@ class Skill
         /**
      * @return Collection<int, background>
      */
-    public function getBackgroundId(): Collection
+    public function getBackground(): Collection
     {
         return $this->background;
     }
 
-    public function addBackgroundId(background $background): self
+    public function addBackground(background $background): self
     {
         if (!$this->background->contains($background)) {
             $this->background->add($background);
@@ -161,7 +162,7 @@ class Skill
         return $this;
     }
 
-    public function removeBackgroundId(background $background): self
+    public function removeBackground(background $background): self
     {
         $this->background->removeElement($background);
 
