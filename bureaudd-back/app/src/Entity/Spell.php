@@ -42,7 +42,7 @@ class Spell
     private Collection $race;
 
     #[ORM\ManyToMany(targetEntity: CharacterClass::class, inversedBy: 'spells')]
-    private Collection $character_class;
+    private Collection $characterClass;
 
     public function getId(): ?int
     {

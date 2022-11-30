@@ -39,8 +39,8 @@ final class CharacterClassFactory extends ModelFactory
     protected function getDefaults(): array
     {
         return [
-            // TODO add your default values here (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories)
-            'class_name' => self::faker()->text(),
+            'class_name' => self::faker()->monthName(),
+            'subclass' => self::faker()->boolean(),
         ];
     }
 

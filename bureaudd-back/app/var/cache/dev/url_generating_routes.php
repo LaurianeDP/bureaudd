@@ -12,4 +12,5 @@ return [
     'app_transformation' => [[], ['_controller' => 'App\\Controller\\TransformationController::index'], [], [['text', '/transformation']], [], [], []],
     'api_users' => [[], ['_controller' => 'App\\Controller\\UserController::getUsers'], [], [['text', '/api/users']], [], [], []],
     'api_user' => [['userId'], ['_controller' => 'App\\Controller\\UserController::getOneUser'], ['id' => '\\d+'], [['variable', '/', '[^/]++', 'userId', true], ['text', '/api/users']], [], [], []],
+    'api_user_characters' => [['userId'], ['_controller' => 'App\\Controller\\UserController::getCharactersOfOneUser'], ['id' => '\\d+'], [['text', '/characters'], ['variable', '/', '[^/]++', 'userId', true], ['text', '/api/users']], [], [], []],
 ];

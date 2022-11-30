@@ -29,7 +29,7 @@ class Skill
     private ?string $skill_description_long = null;
 
     #[ORM\ManyToMany(targetEntity: CharacterClass::class, inversedBy: 'skills')]
-    private Collection $character_class;
+    private Collection $characterClass;
 
     #[ORM\ManyToMany(targetEntity: Race::class, inversedBy: 'skills')]
     private Collection $race;
@@ -39,7 +39,7 @@ class Skill
 
     public function __construct()
     {
-        $this->character_class = new ArrayCollection();
+        $this->characterClass = new ArrayCollection();
         $this->race = new ArrayCollection();
     }
 
@@ -101,13 +101,13 @@ class Skill
      */
     public function getCharacterClassId(): Collection
     {
-        return $this->character_class;
+        return $this->characterClass;
     }
 
     public function addCharacterClassId(CharacterClass $characterClass): self
     {
-        if (!$this->character_class->contains($characterClass)) {
-            $this->character_class->add($characterClass);
+        if (!$this->characterClass->contains($characterClass)) {
+            $this->characterClass->add($characterClass);
         }
 
         return $this;
@@ -115,7 +115,7 @@ class Skill
 
     public function removeCharacterClassId(CharacterClass $characterClass): self
     {
-        $this->character_class->removeElement($characterClass);
+        $this->characterClass->removeElement($characterClass);
 
         return $this;
     }

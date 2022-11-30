@@ -341,3 +341,8 @@ $classes[] = 'Symfony\Component\VarDumper\Dumper\ContextProvider\RequestContextP
 $classes[] = 'Symfony\Component\VarDumper\Dumper\ContextProvider\CliContextProvider';
 
 $preloaded = Preloader::preload($classes);
+
+$classes = [];
+$classes[] = 'Symfony\\Component\\Routing\\Generator\\CompiledUrlGenerator';
+$classes[] = 'Symfony\\Bundle\\FrameworkBundle\\Routing\\RedirectableCompiledUrlMatcher';
+$preloaded = Preloader::preload($classes, $preloaded);

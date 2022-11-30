@@ -8,6 +8,8 @@ use App\Factory\UserFactory;
 use App\Factory\CharacterFactory;
 use App\Factory\BackgroundFactory;
 use App\Factory\RaceFactory;
+use App\Factory\CharacterClassFactory;
+use App\Entity\CharacterClass;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -18,21 +20,23 @@ class AppFixtures extends Fixture
         $allUsers = UserFactory::createMany(15);
         $allRaces = RaceFactory::createMany(5);
         $allBackgrounds = BackgroundFactory::createMany(7);
+        $allClasses = CharacterClassFactory::createMany(7);
         
         $admin = UserFactory::createOne([
             'roles' => ['USER', 'ADMIN']
         ]);
 
-        $oneUser = $allUsers[array_rand($allUsers)];
-        $manager->flush();
-
         $allCharacters = CharacterFactory::createMany(20, function() use ($allUsers, $allRaces, $allBackgrounds) {
             return [
                 'user' => $allUsers[array_rand($allUsers)],
                 'race' => $allRaces[array_rand($allRaces)],
-                'background' => $allBackgrounds[array_rand($allBackgrounds)]
+                'background' => $allBackgrounds[array_rand($allBackgrounds)],
             ];
         });
+
+        foreach($allCharacters as $character) {
+            $character->addCharacterClass(CharacterClassFactory::random()->object());
+        }
 
         $manager->flush();
     }

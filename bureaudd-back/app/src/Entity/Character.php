@@ -34,10 +34,6 @@ class Character
     #[Groups(["getCharacters", "getUsers"])]
     private ?Race $race = null;
 
-    #[ORM\ManyToMany(targetEntity: CharacterClass::class, mappedBy: 'characters')]
-    #[Groups(["getCharacters", "getUsers"])]
-    private Collection $characterClasses;
-
     #[ORM\ManyToOne(inversedBy: 'characters')]
     #[Groups(["getCharacters", "getUsers"])]
     private ?Background $background = null;
@@ -58,9 +54,17 @@ class Character
     #[Groups(["getCharacters", "getUsers"])]
     private ?string $lastName = null;
 
+    #[ORM\Column]
+    #[Groups(["getCharacters"])]
+    private ?bool $npc = null;
+
+    #[ORM\ManyToMany(targetEntity: CharacterClass::class, inversedBy: 'characters')]
+    #[Groups(["getCharacters"])]
+    private Collection $characterClass;
+
     public function __construct()
     {
-        $this->characterClasses = new ArrayCollection();
+        $this->characterClass = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -116,32 +120,6 @@ class Character
         return $this;
     }
 
-    /**
-     * @return Collection<int, CharacterClass>
-     */
-    public function getCharacterClasses(): Collection
-    {
-        return $this->characterClasses;
-    }
-
-    public function addCharacterClass(CharacterClass $characterClass): self
-    {
-        if (!$this->characterClasses->contains($characterClass)) {
-            $this->characterClasses->add($characterClass);
-        }
-
-        return $this;
-    }
-
-    public function removeCharacterClass(CharacterClass $characterClass): self
-    {
-        if ($this->characterClasses->removeElement($characterClass)) {
-            $characterClass->removeCharacterId($this);
-        }
-
-        return $this;
-    }
-
     public function getBackground(): ?Background
     {
         return $this->background;
@@ -186,6 +164,42 @@ class Character
     public function setLastName(?string $lastName): self
     {
         $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    public function isNpc(): ?bool
+    {
+        return $this->npc;
+    }
+
+    public function setNpc(bool $npc): self
+    {
+        $this->npc = $npc;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CharacterClass>
+     */
+    public function getCharacterClass(): Collection
+    {
+        return $this->characterClass;
+    }
+
+    public function addCharacterClass(CharacterClass $characterClass): self
+    {
+        if (!$this->characterClass->contains($characterClass)) {
+            $this->characterClass->add($characterClass);
+        }
+
+        return $this;
+    }
+
+    public function removeCharacterClass(CharacterClass $characterClass): self
+    {
+        $this->characterClass->removeElement($characterClass);
 
         return $this;
     }

@@ -25,16 +25,16 @@ class CharacterClass
     #[Groups(["getCharacters"])]
     private ?string $subclass = null;
 
-    #[ORM\ManyToMany(targetEntity: Character::class, inversedBy: 'characterClasses')]
-    private Collection $characters;
-
-    #[ORM\ManyToMany(targetEntity: Skill::class, mappedBy: 'characterClasses')]
+    #[ORM\ManyToMany(targetEntity: Skill::class, mappedBy: 'characterClass')]
     #[Groups(["getCharacters"])]
     private Collection $skills;
 
-    #[ORM\ManyToMany(targetEntity: Spell::class, mappedBy: 'characterClasses')]
+    #[ORM\ManyToMany(targetEntity: Spell::class, mappedBy: 'characterClass')]
     #[Groups(["getCharacters"])]
     private Collection $spells;
+
+    #[ORM\ManyToMany(targetEntity: Character::class, mappedBy: 'characterClass')]
+    private Collection $characters;
 
     public function __construct()
     {
@@ -71,30 +71,6 @@ class CharacterClass
         return $this;
     }
 
-    /**
-     * @return Collection<int, Character>
-     */
-    public function getCharacters(): Collection
-    {
-        return $this->characters;
-    }
-
-    public function addCharacter(Character $character): self
-    {
-        if (!$this->characters->contains($character)) {
-            $this->characters->add($character);
-            $character->setCharacterClassId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCharacterId(Character $character): self
-    {
-        $this->characters->removeElement($character);
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Skill>
@@ -124,7 +100,7 @@ class CharacterClass
     }
 
     /**
-     * @return Collection<int, spell>
+     * @return Collection<int, Spell>
      */
     public function getSpells(): Collection
     {
@@ -145,6 +121,33 @@ class CharacterClass
     {
         if ($this->spells->removeElement($spell)) {
             $spell->removeCharacterClassId($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Character>
+     */
+    public function getCharacters(): Collection
+    {
+        return $this->characters;
+    }
+
+    public function addCharacter(Character $character): self
+    {
+        if (!$this->characters->contains($character)) {
+            $this->characters->add($character);
+            $character->addCharacterClass($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCharacter(Character $character): self
+    {
+        if ($this->characters->removeElement($character)) {
+            $character->removeCharacterClass($this);
         }
 
         return $this;

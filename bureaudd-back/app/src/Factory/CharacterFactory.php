@@ -43,6 +43,7 @@ final class CharacterFactory extends ModelFactory
             'firstName' => self::faker()->firstName(),
             'lastName' => self::faker()->colorName(),
             'active' => false,
+            'npc' => self::faker()->boolean(),
         ];
     }
 
