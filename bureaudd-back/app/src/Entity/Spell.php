@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: SpellRepository::class)]
 class Spell
@@ -14,9 +15,11 @@ class Spell
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(["getRaces"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["getRaces"])]
     private ?string $spell_name = null;
 
     #[ORM\Column]

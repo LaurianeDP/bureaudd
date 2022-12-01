@@ -8,10 +8,16 @@
 return [
     false, // $matchHost
     [ // $staticRoutes
+        '/api/backgrounds' => [[['_route' => 'api_backgrounds', '_controller' => 'App\\Controller\\BackgroundController::getBackgrounds'], null, ['GET' => 0], null, false, false, null]],
+        '/campaign' => [[['_route' => 'app_campaign', '_controller' => 'App\\Controller\\CampaignController::index'], null, null, null, false, false, null]],
+        '/character/class' => [[['_route' => 'app_character_class', '_controller' => 'App\\Controller\\CharacterClassController::index'], null, null, null, false, false, null]],
         '/api/characters' => [[['_route' => 'api_characters', '_controller' => 'App\\Controller\\CharacterController::getCharacters'], null, ['GET' => 0], null, false, false, null]],
         '/f/a/q' => [[['_route' => 'app_f_a_q', '_controller' => 'App\\Controller\\FAQController::index'], null, null, null, false, false, null]],
         '/feedback' => [[['_route' => 'app_feedback', '_controller' => 'App\\Controller\\FeedbackController::index'], null, null, null, false, false, null]],
         '/note' => [[['_route' => 'app_note', '_controller' => 'App\\Controller\\NoteController::index'], null, null, null, false, false, null]],
+        '/api/races' => [[['_route' => 'api_races', '_controller' => 'App\\Controller\\RaceController::getRaces'], null, ['GET' => 0], null, false, false, null]],
+        '/skill' => [[['_route' => 'app_skill', '_controller' => 'App\\Controller\\SkillController::index'], null, null, null, false, false, null]],
+        '/spell' => [[['_route' => 'app_spell', '_controller' => 'App\\Controller\\SpellController::index'], null, null, null, false, false, null]],
         '/transformation' => [[['_route' => 'app_transformation', '_controller' => 'App\\Controller\\TransformationController::index'], null, null, null, false, false, null]],
         '/api/users' => [[['_route' => 'api_users', '_controller' => 'App\\Controller\\UserController::getUsers'], null, ['GET' => 0], null, false, false, null]],
     ],

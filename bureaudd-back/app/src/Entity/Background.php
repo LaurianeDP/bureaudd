@@ -14,22 +14,25 @@ class Background
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["getCharacters"])]
+    #[Groups(["getCharacters", "getBackgrounds"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["getCharacters"])]
+    #[Groups(["getCharacters", "getBackgrounds"])]
     private ?string $background_name = null;
 
     #[ORM\OneToMany(mappedBy: 'background', targetEntity: Character::class)]
+    #[Groups(["getBackgrounds"])]
     private Collection $characters;
 
-    #[ORM\ManyToMany(targetEntity: Skill::class, mappedBy: 'background')]
+    #[ORM\ManyToMany(targetEntity: Skill::class, inversedBy: 'backgrounds')]
+    #[Groups(["getBackgrounds"])]
     private Collection $skills;
 
     public function __construct()
     {
         $this->characters = new ArrayCollection();
+        $this->skills = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -75,6 +78,30 @@ class Background
                 $character->setBackground(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Skill>
+     */
+    public function getSkills(): Collection
+    {
+        return $this->skills;
+    }
+
+    public function addSkill(Skill $skill): self
+    {
+        if (!$this->skills->contains($skill)) {
+            $this->skills->add($skill);
+        }
+
+        return $this;
+    }
+
+    public function removeSkill(Skill $skill): self
+    {
+        $this->skills->removeElement($skill);
 
         return $this;
     }

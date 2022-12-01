@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: SkillRepository::class)]
 class Skill
@@ -14,9 +15,11 @@ class Skill
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(["getRaces", "getBackgrounds"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["getRaces", "getBackgrounds"])]
     private ?string $skill_name = null;
 
     #[ORM\Column]
@@ -37,11 +40,15 @@ class Skill
     #[ORM\ManyToMany(targetEntity: Background::class, inversedBy: 'skills')]
     private Collection $background;
 
+    #[ORM\ManyToMany(targetEntity: Background::class, mappedBy: 'skills')]
+    private Collection $backgrounds;
+
     public function __construct()
     {
         $this->characterClass = new ArrayCollection();
         $this->race = new ArrayCollection();
         $this->background = new ArrayCollection();
+        $this->backgrounds = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -167,5 +174,13 @@ class Skill
         $this->background->removeElement($background);
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Background>
+     */
+    public function getBackgrounds(): Collection
+    {
+        return $this->backgrounds;
     }
 }

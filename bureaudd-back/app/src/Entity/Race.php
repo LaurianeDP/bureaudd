@@ -14,20 +14,23 @@ class Race
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["getCharacters"])]
+    #[Groups(["getCharacters", "getRaces"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["getCharacters"])]
+    #[Groups(["getCharacters", "getRaces"])]
     private ?string $race_name = null;
 
     #[ORM\OneToMany(mappedBy: 'race', targetEntity: Character::class)]
+    #[Groups(["getRaces"])]
     private Collection $characters;
 
     #[ORM\ManyToMany(targetEntity: Skill::class, mappedBy: 'race')]
+    #[Groups(["getRaces"])]
     private Collection $skills;
 
     #[ORM\ManyToMany(targetEntity: Spell::class, mappedBy: 'race')]
+    #[Groups(["getRaces"])]
     private Collection $spells;
 
     public function __construct()
