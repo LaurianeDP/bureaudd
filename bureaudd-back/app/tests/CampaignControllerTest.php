@@ -7,7 +7,7 @@ use App\Repository\CampaignRepository;
 
 class CampaignControllerTest extends WebTestCase
 {
-    public function testGetAllRaces(): void
+    public function testGetAllCampaigns(): void
     {
         $client = static::createClient();
         $campaignRepository = static::getContainer()->get(CampaignRepository::class);

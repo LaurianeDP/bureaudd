@@ -25,7 +25,7 @@ class Background
     #[Groups(["getBackgrounds"])]
     private Collection $characters;
 
-    #[ORM\ManyToMany(targetEntity: Skill::class, inversedBy: 'backgrounds')]
+    #[ORM\ManyToMany(targetEntity: Skill::class, mappedBy: 'background')]
     #[Groups(["getBackgrounds"])]
     private Collection $skills;
 

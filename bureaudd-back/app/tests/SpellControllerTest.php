@@ -7,7 +7,7 @@ use App\Repository\SpellRepository;
 
 class SpellControllerTest extends WebTestCase
 {
-    public function testGetAllRaces(): void
+    public function testGetAllSpells(): void
     {
         $client = static::createClient();
         $spellRepository = static::getContainer()->get(SpellRepository::class);

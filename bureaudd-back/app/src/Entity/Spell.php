@@ -15,11 +15,11 @@ class Spell
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["getRaces"])]
+    #[Groups(["getRaces", "getCharacterClasses"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["getRaces"])]
+    #[Groups(["getRaces", "getCharacterClasses"])]
     private ?string $spell_name = null;
 
     #[ORM\Column]

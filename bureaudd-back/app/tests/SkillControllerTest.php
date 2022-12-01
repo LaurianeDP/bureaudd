@@ -7,7 +7,7 @@ use App\Repository\SkillRepository;
 
 class SkillControllerTest extends WebTestCase
 {
-    public function testGetAllRaces(): void
+    public function testGetAllSkills(): void
     {
         $client = static::createClient();
         $skillRepository = static::getContainer()->get(SkillRepository::class);

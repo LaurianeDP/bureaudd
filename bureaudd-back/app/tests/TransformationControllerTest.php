@@ -7,7 +7,7 @@ use App\Repository\TransformationRepository;
 
 class TransformationControllerTest extends WebTestCase
 {
-    public function testGetAllRaces(): void
+    public function testGetAllTransformations(): void
     {
         $client = static::createClient();
         $transformationRepository = static::getContainer()->get(TransformationRepository::class);

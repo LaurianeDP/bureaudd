@@ -14,24 +14,27 @@ class CharacterClass
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["getCharacters"])]
+    #[Groups(["getCharacters", "getCharacterClasses"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["getCharacters"])]
+    #[Groups(["getCharacters", "getCharacterClasses"])]
     private ?string $class_name = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["getCharacters"])]
+    #[Groups(["getCharacters", "getCharacterClasses"])]
     private ?string $subclass = null;
 
     #[ORM\ManyToMany(targetEntity: Skill::class, mappedBy: 'characterClass')]
+    #[Groups(["getCharacterClasses"])]
     private Collection $skills;
 
     #[ORM\ManyToMany(targetEntity: Character::class, mappedBy: 'characterClass')]
+    #[Groups(["getCharacterClasses"])]
     private Collection $characters;
 
     #[ORM\ManyToMany(targetEntity: Spell::class, mappedBy: 'characterClass')]
+    #[Groups(["getCharacterClasses"])]
     private Collection $spells;
 
     public function __construct()
@@ -83,7 +86,7 @@ class CharacterClass
     {
         if (!$this->skills->contains($skill)) {
             $this->skills->add($skill);
-            $skill->addCharacterClassId($this);
+            $skill->addCharacterClass($this);
         }
 
         return $this;
@@ -92,7 +95,7 @@ class CharacterClass
     public function removeSkill(Skill $skill): self
     {
         if ($this->skills->removeElement($skill)) {
-            $skill->removeCharacterClassId($this);
+            $skill->removeCharacterClass($this);
         }
 
         return $this;

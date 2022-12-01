@@ -7,7 +7,7 @@ use App\Repository\NoteRepository;
 
 class NoteControllerTest extends WebTestCase
 {
-    public function testGetAllRaces(): void
+    public function testGetAllNotes(): void
     {
         $client = static::createClient();
         $noteRepository = static::getContainer()->get(NoteRepository::class);

@@ -15,11 +15,11 @@ class Skill
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["getRaces", "getBackgrounds"])]
+    #[Groups(["getRaces", "getBackgrounds", "getCharacterClasses"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["getRaces", "getBackgrounds"])]
+    #[Groups(["getRaces", "getBackgrounds", "getCharacterClasses"])]
     private ?string $skill_name = null;
 
     #[ORM\Column]
@@ -40,15 +40,11 @@ class Skill
     #[ORM\ManyToMany(targetEntity: Background::class, inversedBy: 'skills')]
     private Collection $background;
 
-    #[ORM\ManyToMany(targetEntity: Background::class, mappedBy: 'skills')]
-    private Collection $backgrounds;
-
     public function __construct()
     {
         $this->characterClass = new ArrayCollection();
         $this->race = new ArrayCollection();
         $this->background = new ArrayCollection();
-        $this->backgrounds = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -176,11 +172,4 @@ class Skill
         return $this;
     }
 
-    /**
-     * @return Collection<int, Background>
-     */
-    public function getBackgrounds(): Collection
-    {
-        return $this->backgrounds;
-    }
 }

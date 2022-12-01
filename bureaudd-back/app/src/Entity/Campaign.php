@@ -14,14 +14,15 @@ class Campaign
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["getCharacters"])]
+    #[Groups(["getCharacters", "getCampaigns"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["getCharacters"])]
+    #[Groups(["getCharacters", "getCampaigns"])]
     private ?string $campaign_name = null;
 
     #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: Character::class)]
+    #[Groups(["getCampaigns"])]
     private Collection $characters;
 
     public function __construct()

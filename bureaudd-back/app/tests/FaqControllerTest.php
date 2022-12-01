@@ -7,7 +7,7 @@ use App\Repository\FaqRepository;
 
 class FaqControllerTest extends WebTestCase
 {
-    public function testGetAllRaces(): void
+    public function testGetAllFaqs(): void
     {
         $client = static::createClient();
         $faqRepository = static::getContainer()->get(FaqRepository::class);

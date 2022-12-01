@@ -7,7 +7,7 @@ use App\Repository\FeedbackRepository;
 
 class FeedbackControllerTest extends WebTestCase
 {
-    public function testGetAllRaces(): void
+    public function testGetAllFeedbacks(): void
     {
         $client = static::createClient();
         $feedbackRepository = static::getContainer()->get(FeedbackRepository::class);

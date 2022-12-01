@@ -7,7 +7,7 @@ use App\Repository\CharacterClassRepository;
 
 class CharacterClassControllerTest extends WebTestCase
 {
-    public function testGetAllRaces(): void
+    public function testGetAllCharacterClasses(): void
     {
         $client = static::createClient();
         $characterClassRepository = static::getContainer()->get(CharacterClassRepository::class);

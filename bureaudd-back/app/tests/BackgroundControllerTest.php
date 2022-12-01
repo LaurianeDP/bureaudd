@@ -7,7 +7,7 @@ use App\Repository\BackgroundRepository;
 
 class BackgroundControllerTest extends WebTestCase
 {
-    public function testGetAllRaces(): void
+    public function testGetAllBackgrounds(): void
     {
         $client = static::createClient();
         $backgroundRepository = static::getContainer()->get(BackgroundRepository::class);

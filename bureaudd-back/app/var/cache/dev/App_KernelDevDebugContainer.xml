@@ -3998,6 +3998,20 @@
         <argument key="serialiser" type="service_closure" id="serializer"/>
       </argument>
     </service>
+    <service id=".service_locator.cCLVzB1" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="campaignRepository" type="service_closure" id="App\Repository\CampaignRepository"/>
+        <argument key="serialiser" type="service_closure" id="serializer"/>
+      </argument>
+    </service>
+    <service id=".service_locator.lWOE7In" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="characterClassRepository" type="service_closure" id="App\Repository\CharacterClassRepository"/>
+        <argument key="serialiser" type="service_closure" id="serializer"/>
+      </argument>
+    </service>
     <service id=".service_locator.zuueUfB" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
@@ -4017,6 +4031,13 @@
       <argument type="collection">
         <argument key="raceRepository" type="service_closure" id="App\Repository\RaceRepository"/>
         <argument key="serialiser" type="service_closure" id="serializer"/>
+      </argument>
+    </service>
+    <service id=".service_locator.7Y9N4yj" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="serialiser" type="service_closure" id="serializer"/>
+        <argument key="transformationRepository" type="service_closure" id="App\Repository\TransformationRepository"/>
       </argument>
     </service>
     <service id=".service_locator.LwdZKSZ" class="Symfony\Component\DependencyInjection\ServiceLocator">
@@ -4041,13 +4062,16 @@
         <argument key="user" type="service_closure" id=".errored..service_locator.BFhVacd.App\Entity\User"/>
       </argument>
     </service>
-    <service id=".service_locator.76dd4oG" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.apCrE8." class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Controller\BackgroundController::getBackgrounds" type="service_closure" id=".service_locator.tywWH6A"/>
+        <argument key="App\Controller\CampaignController::getCampaigns" type="service_closure" id=".service_locator.cCLVzB1"/>
+        <argument key="App\Controller\CharacterClassController::getBackgrounds" type="service_closure" id=".service_locator.lWOE7In"/>
         <argument key="App\Controller\CharacterController::getCharacters" type="service_closure" id=".service_locator.zuueUfB"/>
         <argument key="App\Controller\CharacterController::getOneCharacter" type="service_closure" id=".service_locator.vp14bQv"/>
         <argument key="App\Controller\RaceController::getRaces" type="service_closure" id=".service_locator.YJDONYb"/>
+        <argument key="App\Controller\TransformationController::getTransformations" type="service_closure" id=".service_locator.7Y9N4yj"/>
         <argument key="App\Controller\UserController::getCharactersOfOneUser" type="service_closure" id=".service_locator.BFhVacd"/>
         <argument key="App\Controller\UserController::getOneUser" type="service_closure" id=".service_locator.lTsjRc6"/>
         <argument key="App\Controller\UserController::getUsers" type="service_closure" id=".service_locator.LwdZKSZ"/>
@@ -4058,9 +4082,12 @@
         <argument key="kernel::registerContainerConfiguration" type="service_closure" id=".service_locator.xUrKPVU"/>
         <argument key="kernel::terminate" type="service_closure" id=".service_locator.bRdave9"/>
         <argument key="App\Controller\BackgroundController:getBackgrounds" type="service_closure" id=".service_locator.tywWH6A"/>
+        <argument key="App\Controller\CampaignController:getCampaigns" type="service_closure" id=".service_locator.cCLVzB1"/>
+        <argument key="App\Controller\CharacterClassController:getBackgrounds" type="service_closure" id=".service_locator.lWOE7In"/>
         <argument key="App\Controller\CharacterController:getCharacters" type="service_closure" id=".service_locator.zuueUfB"/>
         <argument key="App\Controller\CharacterController:getOneCharacter" type="service_closure" id=".service_locator.vp14bQv"/>
         <argument key="App\Controller\RaceController:getRaces" type="service_closure" id=".service_locator.YJDONYb"/>
+        <argument key="App\Controller\TransformationController:getTransformations" type="service_closure" id=".service_locator.7Y9N4yj"/>
         <argument key="App\Controller\UserController:getCharactersOfOneUser" type="service_closure" id=".service_locator.BFhVacd"/>
         <argument key="App\Controller\UserController:getOneUser" type="service_closure" id=".service_locator.lTsjRc6"/>
         <argument key="App\Controller\UserController:getUsers" type="service_closure" id=".service_locator.LwdZKSZ"/>
@@ -4402,12 +4429,12 @@
       <argument type="service" id="security.token_storage"/>
     </service>
     <service id="debug.argument_resolver.service.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">
-      <argument type="service" id=".service_locator.76dd4oG"/>
+      <argument type="service" id=".service_locator.apCrE8."/>
     </service>
     <service id="debug.argument_resolver.default.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver"/>
     <service id="debug.argument_resolver.variadic.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver"/>
     <service id="debug.argument_resolver.not_tagged_controller.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver">
-      <argument type="service" id=".service_locator.76dd4oG"/>
+      <argument type="service" id=".service_locator.apCrE8."/>
     </service>
     <service id=".doctrine.orm.default_metadata_driver.inner" class="Doctrine\Persistence\Mapping\Driver\MappingDriverChain">
       <call method="addDriver">
@@ -5080,14 +5107,15 @@
     <service id="security.firewall.context_locator" alias=".service_locator.zJyh7qS"/>
     <service id="Symfony\Component\Security\Core\User\UserCheckerInterface" alias="security.user_checker"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.gSv9zYw" public="true"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.76dd4oG"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.apCrE8."/>
     <service id="doctrine.id_generator_locator" alias=".service_locator.KLVvNIq"/>
     <service id="Psr\Log\LoggerInterface" alias="logger"/>
     <service id=".service_locator.0GV1BZZ" alias=".service_locator.gSv9zYw"/>
     <service id=".service_locator.7Df8vO5" alias=".service_locator.vp14bQv"/>
+    <service id=".service_locator.Wuu0GoS" alias=".service_locator.7Y9N4yj"/>
     <service id=".service_locator.IwR6tnm" alias=".service_locator.LwdZKSZ"/>
     <service id=".service_locator.TdBu7nn" alias=".service_locator.BFhVacd"/>
-    <service id=".service_locator.TW1K7xq" alias=".service_locator.76dd4oG"/>
+    <service id=".service_locator.EC3zf4V" alias=".service_locator.apCrE8."/>
     <service id=".service_locator.qBCHs1a" alias=".service_locator.QXcJQkF"/>
     <service id=".service_locator._eRAkJb" alias=".service_locator.jIxfAsi"/>
     <service id="event_dispatcher" alias="debug.event_dispatcher" public="true"/>
@@ -5111,9 +5139,12 @@
     <service id=".service_locator.FatRZu2" alias=".service_locator.bRdave9"/>
     <service id=".service_locator.uo5c0SP" alias=".service_locator.xUrKPVU"/>
     <service id=".service_locator.67HaMQO" alias=".service_locator.tywWH6A"/>
+    <service id=".service_locator.oKvWmWC" alias=".service_locator.cCLVzB1"/>
+    <service id=".service_locator.3HbNdor" alias=".service_locator.lWOE7In"/>
     <service id=".service_locator.2PlVAkK" alias=".service_locator.zuueUfB"/>
     <service id=".service_locator.t..aJjT" alias=".service_locator.vp14bQv"/>
     <service id=".service_locator.DhdfWsn" alias=".service_locator.YJDONYb"/>
+    <service id=".service_locator.QZ3CufE" alias=".service_locator.7Y9N4yj"/>
     <service id=".service_locator.d2OZ.uz" alias=".service_locator.LwdZKSZ"/>
     <service id=".service_locator.xWHSfDr" alias=".service_locator.lTsjRc6"/>
     <service id=".service_locator.HW483zK" alias=".service_locator.BFhVacd"/>
