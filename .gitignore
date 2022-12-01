@@ -8,3 +8,7 @@ bureaudd-back/app/vendor/
 bureaudd-back/mysql/
 bureaudd-back/app/var/
 bureaudd-back/mysql/undo_001
+bureaudd-back/mysql/mysql.ibd
+bureaudd-back/app/var/cache/dev/App_KernelDevDebugContainer.php.meta
+bureaudd-back/app/var/cache/dev/App_KernelDevDebugContainer.xml
+bureaudd-back/app/var/cache/dev/App_KernelDevDebugContainer.xml.meta

@@ -195,6 +195,20 @@
       <tag name="controller.service_arguments"/>
       <tag name="routing.route_loader"/>
     </service>
+    <service id="App\Controller\BackgroundController" class="App\Controller\BackgroundController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="container.service_subscriber"/>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.jIxfAsi.App\Controller\BackgroundController"/>
+      </call>
+    </service>
+    <service id="App\Controller\CharacterClassController" class="App\Controller\CharacterClassController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="container.service_subscriber"/>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.jIxfAsi.App\Controller\CharacterClassController"/>
+      </call>
+    </service>
     <service id="App\Controller\CharacterController" class="App\Controller\CharacterController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
       <tag name="container.service_subscriber"/>
@@ -221,6 +235,27 @@
       <tag name="container.service_subscriber"/>
       <call method="setContainer">
         <argument type="service" id=".service_locator.jIxfAsi.App\Controller\NoteController"/>
+      </call>
+    </service>
+    <service id="App\Controller\RaceController" class="App\Controller\RaceController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="container.service_subscriber"/>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.jIxfAsi.App\Controller\RaceController"/>
+      </call>
+    </service>
+    <service id="App\Controller\SkillController" class="App\Controller\SkillController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="container.service_subscriber"/>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.jIxfAsi.App\Controller\SkillController"/>
+      </call>
+    </service>
+    <service id="App\Controller\SpellController" class="App\Controller\SpellController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="container.service_subscriber"/>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.jIxfAsi.App\Controller\SpellController"/>
       </call>
     </service>
     <service id="App\Controller\TransformationController" class="App\Controller\TransformationController" public="true" autowire="true" autoconfigure="true">
@@ -3496,6 +3531,12 @@
     <service id="framework_extra_bundle.argument_name_convertor" class="Sensio\Bundle\FrameworkExtraBundle\Request\ArgumentNameConverter">
       <argument type="service" id="argument_metadata_factory"/>
     </service>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\BackgroundController" class="App\Controller\BackgroundController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\BackgroundController" class="App\Controller\BackgroundController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\BackgroundController" class="App\Controller\BackgroundController" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\CharacterClassController" class="App\Controller\CharacterClassController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\CharacterClassController" class="App\Controller\CharacterClassController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\CharacterClassController" class="App\Controller\CharacterClassController" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\CharacterController" class="App\Controller\CharacterController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\CharacterController" class="App\Controller\CharacterController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\CharacterController" class="App\Controller\CharacterController" autowire="true" autoconfigure="true" abstract="true"/>
@@ -3508,6 +3549,15 @@
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\NoteController" class="App\Controller\NoteController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\NoteController" class="App\Controller\NoteController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\NoteController" class="App\Controller\NoteController" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\RaceController" class="App\Controller\RaceController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\RaceController" class="App\Controller\RaceController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\RaceController" class="App\Controller\RaceController" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\SkillController" class="App\Controller\SkillController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\SkillController" class="App\Controller\SkillController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\SkillController" class="App\Controller\SkillController" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\SpellController" class="App\Controller\SpellController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\SpellController" class="App\Controller\SpellController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\SpellController" class="App\Controller\SpellController" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\TransformationController" class="App\Controller\TransformationController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\TransformationController" class="App\Controller\TransformationController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\TransformationController" class="App\Controller\TransformationController" autowire="true" autoconfigure="true" abstract="true"/>
@@ -4123,6 +4173,18 @@
         <argument key="serializer" type="service_closure" id="serializer" on-invalid="ignore"/>
       </argument>
     </service>
+    <service id=".service_locator.jIxfAsi.App\Controller\BackgroundController" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="App\Controller\BackgroundController"/>
+      <argument>App\Controller\BackgroundController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.jIxfAsi" method="withContext"/>
+    </service>
+    <service id=".service_locator.jIxfAsi.App\Controller\CharacterClassController" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="App\Controller\CharacterClassController"/>
+      <argument>App\Controller\CharacterClassController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.jIxfAsi" method="withContext"/>
+    </service>
     <service id=".service_locator.jIxfAsi.App\Controller\CharacterController" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator_context" id="App\Controller\CharacterController"/>
       <argument>App\Controller\CharacterController</argument>
@@ -4144,6 +4206,24 @@
     <service id=".service_locator.jIxfAsi.App\Controller\NoteController" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator_context" id="App\Controller\NoteController"/>
       <argument>App\Controller\NoteController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.jIxfAsi" method="withContext"/>
+    </service>
+    <service id=".service_locator.jIxfAsi.App\Controller\RaceController" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="App\Controller\RaceController"/>
+      <argument>App\Controller\RaceController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.jIxfAsi" method="withContext"/>
+    </service>
+    <service id=".service_locator.jIxfAsi.App\Controller\SkillController" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="App\Controller\SkillController"/>
+      <argument>App\Controller\SkillController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.jIxfAsi" method="withContext"/>
+    </service>
+    <service id=".service_locator.jIxfAsi.App\Controller\SpellController" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="App\Controller\SpellController"/>
+      <argument>App\Controller\SpellController</argument>
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.jIxfAsi" method="withContext"/>
     </service>

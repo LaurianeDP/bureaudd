@@ -26,7 +26,6 @@ class CharacterClass
     private ?string $subclass = null;
 
     #[ORM\ManyToMany(targetEntity: Skill::class, mappedBy: 'characterClass')]
-    #[Groups(["getCharacters"])]
     private Collection $skills;
 
     #[ORM\ManyToMany(targetEntity: Character::class, mappedBy: 'characterClass')]

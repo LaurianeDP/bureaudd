@@ -5,14 +5,14 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\CharacterRepository;
 use App\Entity\Character;
-use Symfony\Component\Serializer\Annotation\Groups;
 
 class CharacterController extends AbstractController
 {
