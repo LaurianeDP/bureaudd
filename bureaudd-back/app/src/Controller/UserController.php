@@ -43,10 +43,22 @@ class UserController extends AbstractController
     public function getCharactersOfOneUser(SerializerInterface $serialiser, User $user, CharacterRepository $characterRepository): JsonResponse
     {
         $userCharacters = $characterRepository->findBy(['user' => $user]);
-        $JsonUser = $serialiser->serialize($userCharacters, 'json', ['groups' => 'getCharacters']);
+        $JsonUserCharacters = $serialiser->serialize($userCharacters, 'json', ['groups' => 'getCharacters']);
         return new JsonResponse([
-            'data' => json_decode($JsonUser),
+            'data' => json_decode($JsonUserCharacters),
             'total' => count($userCharacters),
+        ], Response::HTTP_OK, ['accept' => 'json']);
+    }
+
+    #[Route('/api/users/{userId}/activeCharacter', name: 'api_user_active_character', requirements: ['id' => '\d+'], methods: ['GET'])]
+    #[ParamConverter('user', options: ['mapping' => ['userId' => 'id']])]
+    public function getActiveCharacterOfOneUser(SerializerInterface $serialiser, User $user, CharacterRepository $characterRepository): JsonResponse
+    {
+        $userActiveCharacter = $characterRepository->findActiveCharacterOfUser($user);
+        $JsonUserActiveCharacter = $serialiser->serialize($userActiveCharacter, 'json', ['groups' => 'getCharacters']);
+        return new JsonResponse([
+            'data' => json_decode($JsonUserActiveCharacter),
+            'total' => json_decode($JsonUserActiveCharacter)!=null? 1 : 0,
         ], Response::HTTP_OK, ['accept' => 'json']);
     }
 }

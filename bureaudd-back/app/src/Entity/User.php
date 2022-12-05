@@ -38,9 +38,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(["getUsers"])]
     private Collection $feedback;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Character::class)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Character::class, fetch:"EAGER")]
     #[Groups(["getUsers"])]
-    private ?Collection $characters;
+    private Collection $characters;
 
     #[ORM\Column(length: 255)]
     #[Groups(["getUsers", "getCharacters", "getFeedbacks"])]
@@ -57,7 +57,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->feedback = new ArrayCollection();
-        $this->characters = new Collection();
+        $this->characters = new ArrayCollection();
     }
 
     public function getId(): ?int

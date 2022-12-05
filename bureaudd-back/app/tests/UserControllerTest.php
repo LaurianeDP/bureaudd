@@ -84,7 +84,7 @@ class UserControllerTest extends WebTestCase
         } while (count($randomUser->getCharacters()) === 0);
         
         $randomUserCharacters = $randomUser->getCharacters();
-        $randomCharacter = $randomUserCharacters[array_rand($randomUserCharacters)];
+        $randomCharacter = $randomUserCharacters[0];
         $randomCharacter->setActive(true);
         
         $crawler = $client->request('GET', 'api/users/'.$randomUser->getId().'/activeCharacter');

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Character;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -37,6 +38,17 @@ class CharacterRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function findActiveCharacterOfUser(User $user): ?Character
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.active = :val')
+            ->setParameter('val', true)
+            ->andWhere('c.user = :userId')
+            ->setParameter('userId', $user->getId())
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
 //    /**

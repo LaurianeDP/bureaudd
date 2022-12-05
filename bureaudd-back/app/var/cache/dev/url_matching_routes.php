@@ -44,7 +44,10 @@ return [
                     .'|transformations/([^/]++)(*:322)'
                     .'|users/([^/]++)(?'
                         .'|(*:347)'
-                        .'|/characters(*:366)'
+                        .'|/(?'
+                            .'|characters(*:369)'
+                            .'|activeCharacter(*:392)'
+                        .')'
                     .')'
                 .')'
             .')/?$}sDu',
@@ -63,8 +66,9 @@ return [
         289 => [[['_route' => 'api_spell', '_controller' => 'App\\Controller\\SpellController::getOneSpell'], ['spellId'], ['GET' => 0], null, false, true, null]],
         322 => [[['_route' => 'api_transformation', '_controller' => 'App\\Controller\\TransformationController::getOneTransformation'], ['transformationId'], ['GET' => 0], null, false, true, null]],
         347 => [[['_route' => 'api_user', '_controller' => 'App\\Controller\\UserController::getOneUser'], ['userId'], ['GET' => 0], null, false, true, null]],
-        366 => [
-            [['_route' => 'api_user_characters', '_controller' => 'App\\Controller\\UserController::getCharactersOfOneUser'], ['userId'], ['GET' => 0], null, false, false, null],
+        369 => [[['_route' => 'api_user_characters', '_controller' => 'App\\Controller\\UserController::getCharactersOfOneUser'], ['userId'], ['GET' => 0], null, false, false, null]],
+        392 => [
+            [['_route' => 'api_user_active_character', '_controller' => 'App\\Controller\\UserController::getActiveCharacterOfOneUser'], ['userId'], ['GET' => 0], null, false, false, null],
             [null, null, null, null, false, false, 0],
         ],
     ],

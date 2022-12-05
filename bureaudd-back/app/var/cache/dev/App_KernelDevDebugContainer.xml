@@ -4167,7 +4167,7 @@
         <argument key="user" type="service_closure" id=".errored..service_locator.BFhVacd.App\Entity\User"/>
       </argument>
     </service>
-    <service id=".service_locator.dBv7tq2" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.VkIUy3E" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Controller\BackgroundController::getBackgrounds" type="service_closure" id=".service_locator.tywWH6A"/>
@@ -4192,6 +4192,7 @@
         <argument key="App\Controller\SpellController::getSpells" type="service_closure" id=".service_locator.GTkMnBD"/>
         <argument key="App\Controller\TransformationController::getOneTransformation" type="service_closure" id=".service_locator.to9U6cZ"/>
         <argument key="App\Controller\TransformationController::getTransformations" type="service_closure" id=".service_locator.7Y9N4yj"/>
+        <argument key="App\Controller\UserController::getActiveCharacterOfOneUser" type="service_closure" id=".service_locator.BFhVacd"/>
         <argument key="App\Controller\UserController::getCharactersOfOneUser" type="service_closure" id=".service_locator.BFhVacd"/>
         <argument key="App\Controller\UserController::getOneUser" type="service_closure" id=".service_locator.lTsjRc6"/>
         <argument key="App\Controller\UserController::getUsers" type="service_closure" id=".service_locator.LwdZKSZ"/>
@@ -4223,6 +4224,7 @@
         <argument key="App\Controller\SpellController:getSpells" type="service_closure" id=".service_locator.GTkMnBD"/>
         <argument key="App\Controller\TransformationController:getOneTransformation" type="service_closure" id=".service_locator.to9U6cZ"/>
         <argument key="App\Controller\TransformationController:getTransformations" type="service_closure" id=".service_locator.7Y9N4yj"/>
+        <argument key="App\Controller\UserController:getActiveCharacterOfOneUser" type="service_closure" id=".service_locator.BFhVacd"/>
         <argument key="App\Controller\UserController:getCharactersOfOneUser" type="service_closure" id=".service_locator.BFhVacd"/>
         <argument key="App\Controller\UserController:getOneUser" type="service_closure" id=".service_locator.lTsjRc6"/>
         <argument key="App\Controller\UserController:getUsers" type="service_closure" id=".service_locator.LwdZKSZ"/>
@@ -4564,12 +4566,12 @@
       <argument type="service" id="security.token_storage"/>
     </service>
     <service id="debug.argument_resolver.service.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">
-      <argument type="service" id=".service_locator.dBv7tq2"/>
+      <argument type="service" id=".service_locator.VkIUy3E"/>
     </service>
     <service id="debug.argument_resolver.default.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver"/>
     <service id="debug.argument_resolver.variadic.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver"/>
     <service id="debug.argument_resolver.not_tagged_controller.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver">
-      <argument type="service" id=".service_locator.dBv7tq2"/>
+      <argument type="service" id=".service_locator.VkIUy3E"/>
     </service>
     <service id=".doctrine.orm.default_metadata_driver.inner" class="Doctrine\Persistence\Mapping\Driver\MappingDriverChain">
       <call method="addDriver">
@@ -5252,7 +5254,7 @@
     <service id="security.firewall.context_locator" alias=".service_locator.zJyh7qS"/>
     <service id="Symfony\Component\Security\Core\User\UserCheckerInterface" alias="security.user_checker"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.gSv9zYw" public="true"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.dBv7tq2"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.VkIUy3E"/>
     <service id="doctrine.id_generator_locator" alias=".service_locator.KLVvNIq"/>
     <service id="Psr\Log\LoggerInterface" alias="logger"/>
     <service id=".service_locator.0GV1BZZ" alias=".service_locator.gSv9zYw"/>
@@ -5269,7 +5271,7 @@
     <service id=".service_locator.Wuu0GoS" alias=".service_locator.7Y9N4yj"/>
     <service id=".service_locator.IwR6tnm" alias=".service_locator.LwdZKSZ"/>
     <service id=".service_locator.TdBu7nn" alias=".service_locator.BFhVacd"/>
-    <service id=".service_locator.t09Dn6Z" alias=".service_locator.dBv7tq2"/>
+    <service id=".service_locator.RG5UoFL" alias=".service_locator.VkIUy3E"/>
     <service id=".service_locator.qBCHs1a" alias=".service_locator.QXcJQkF"/>
     <service id=".service_locator._eRAkJb" alias=".service_locator.jIxfAsi"/>
     <service id="event_dispatcher" alias="debug.event_dispatcher" public="true"/>
