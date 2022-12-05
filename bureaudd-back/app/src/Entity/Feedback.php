@@ -12,22 +12,24 @@ class Feedback
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["getUsers"])]
+    #[Groups(["getUsers", "getFeedbacks"])]
     private ?int $id = null;
 
     #[ORM\Column]
-    #[Groups(["getUsers"])]
+    #[Groups(["getUsers", "getFeedbacks"])]
     private ?int $feedback_date = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["getUsers"])]
+    #[Groups(["getUsers", "getFeedbacks"])]
     private ?string $feedback_type = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["getFeedbacks"])]
     private ?string $feedback_content = null;
 
     #[ORM\ManyToOne(inversedBy: 'feedback')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(["getFeedbacks"])]
     private ?User $user = null;
 
     public function getId(): ?int

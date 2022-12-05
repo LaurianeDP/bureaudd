@@ -14,11 +14,11 @@ class Background
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["getCharacters", "getBackgrounds"])]
+    #[Groups(["getCharacters", "getBackgrounds", "getSkills"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["getCharacters", "getBackgrounds"])]
+    #[Groups(["getCharacters", "getBackgrounds", "getSkills"])]
     private ?string $background_name = null;
 
     #[ORM\OneToMany(mappedBy: 'background', targetEntity: Character::class)]

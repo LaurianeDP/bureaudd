@@ -13,22 +13,24 @@ class Note
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["getCharacters"])]
+    #[Groups(["getCharacters", "getNotes"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["getCharacters"])]
+    #[Groups(["getCharacters", "getNotes"])]
     private ?string $title = null;
 
     #[ORM\Column]
-    #[Groups(["getCharacters"])]
+    #[Groups(["getCharacters", "getNotes"])]
     private ?int $note_date = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups(["getNotes"])]
     private ?string $note_content = null;
 
     #[ORM\ManyToOne(inversedBy: 'notes')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(["getNotes"])]
     private ?Character $characterAssociated = null;
 
     public function getId(): ?int

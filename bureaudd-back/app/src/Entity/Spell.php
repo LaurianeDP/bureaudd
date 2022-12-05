@@ -15,38 +15,47 @@ class Spell
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["getRaces", "getCharacterClasses"])]
+    #[Groups(["getRaces", "getCharacterClasses", "getSpells"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["getRaces", "getCharacterClasses"])]
+    #[Groups(["getRaces", "getCharacterClasses", "getSpells"])]
     private ?string $spell_name = null;
 
     #[ORM\Column]
+    #[Groups(["getSpells"])]
     private ?int $spell_level = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["getSpells"])]
     private ?string $incantation_duration = null;
 
     #[ORM\Column]
+    #[Groups(["getSpells"])]
     private ?bool $concentration = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["getSpells"])]
     private ?string $spell_range = null;
 
     #[ORM\Column]
+    #[Groups(["getSpells"])]
     private ?bool $ritual = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["getSpells"])]
     private ?string $spell_description_short = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups(["getSpells"])]
     private ?string $spell_description_long = null;
 
     #[ORM\ManyToMany(targetEntity: CharacterClass::class, inversedBy: 'spells')]
+    #[Groups(["getSpells"])]
     private Collection $characterClass;
 
     #[ORM\ManyToMany(targetEntity: Race::class, inversedBy: 'spells')]
+    #[Groups(["getSpells"])]
     private Collection $race;
 
 

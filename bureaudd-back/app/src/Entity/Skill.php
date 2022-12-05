@@ -15,29 +15,35 @@ class Skill
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["getRaces", "getBackgrounds", "getCharacterClasses"])]
+    #[Groups(["getRaces", "getBackgrounds", "getCharacterClasses", "getSkills"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["getRaces", "getBackgrounds", "getCharacterClasses"])]
+    #[Groups(["getRaces", "getBackgrounds", "getCharacterClasses", "getSkills"])]
     private ?string $skill_name = null;
 
     #[ORM\Column]
+    #[Groups(["getSkills"])]
     private ?int $skill_level = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["getSkills"])]
     private ?string $skill_description_short = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups(["getSkills"])]
     private ?string $skill_description_long = null;
 
     #[ORM\ManyToMany(targetEntity: CharacterClass::class, inversedBy: 'skills')]
+    #[Groups(["getSkills"])]
     private Collection $characterClass;
 
     #[ORM\ManyToMany(targetEntity: Race::class, inversedBy: 'skills')]
+    #[Groups(["getSkills"])]
     private Collection $race;
 
     #[ORM\ManyToMany(targetEntity: Background::class, inversedBy: 'skills')]
+    #[Groups(["getSkills"])]
     private Collection $background;
 
     public function __construct()

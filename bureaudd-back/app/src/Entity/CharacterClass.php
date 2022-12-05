@@ -14,15 +14,15 @@ class CharacterClass
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["getCharacters", "getCharacterClasses"])]
+    #[Groups(["getCharacters", "getCharacterClasses", "getSkills", "getSpells"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["getCharacters", "getCharacterClasses"])]
+    #[Groups(["getCharacters", "getCharacterClasses", "getSkills", "getSpells"])]
     private ?string $class_name = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["getCharacters", "getCharacterClasses"])]
+    #[Groups(["getCharacters", "getCharacterClasses", "getSkills", "getSpells"])]
     private ?string $subclass = null;
 
     #[ORM\ManyToMany(targetEntity: Skill::class, mappedBy: 'characterClass')]

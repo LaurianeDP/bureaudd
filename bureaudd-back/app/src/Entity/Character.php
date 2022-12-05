@@ -15,7 +15,7 @@ class Character
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["getCharacters", "getUsers", "getRaces", "getBackgrounds", "getCharacterClasses", "getCampaigns"])]
+    #[Groups(["getCharacters", "getUsers", "getRaces", "getBackgrounds", "getCharacterClasses", "getCampaigns", "getNotes"])]
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'characters')]
@@ -27,7 +27,7 @@ class Character
     private ?Campaign $campaign = null;
 
     #[ORM\Column]
-    #[Groups(["getCharacters", "getUsers", "getRaces", "getBackgrounds", "getCharacterClasses", "getCampaigns"])]
+    #[Groups(["getCharacters", "getUsers", "getRaces", "getBackgrounds", "getCharacterClasses", "getCampaigns", "getNotes"])]
     private ?int $level = null;
 
     #[ORM\ManyToOne(inversedBy: 'characters')]
@@ -43,11 +43,11 @@ class Character
     private ?bool $active = null;
 
     #[ORM\Column(length: 100)]
-    #[Groups(["getCharacters", "getUsers", "getRaces", "getBackgrounds", "getCharacterClasses", "getCampaigns"])]
+    #[Groups(["getCharacters", "getUsers", "getRaces", "getBackgrounds", "getCharacterClasses", "getCampaigns", "getNotes"])]
     private ?string $firstName = null;
 
     #[ORM\Column(length: 200, nullable: true)]
-    #[Groups(["getCharacters", "getUsers", "getRaces", "getBackgrounds", "getCharacterClasses", "getCampaigns"])]
+    #[Groups(["getCharacters", "getUsers", "getRaces", "getBackgrounds", "getCharacterClasses", "getCampaigns", "getNotes"])]
     private ?string $lastName = null;
 
     #[ORM\Column]
