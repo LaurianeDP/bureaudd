@@ -23,22 +23,22 @@ class BackgroundControllerTest extends WebTestCase
         $this->assertEquals($total, $totalBackgrounds);
     }
     
-    // public function testGetOneCharacter(): void
-    // {
-    //     $client = static::createClient();
-    //     $characterRepository = static::getContainer()->get(CharacterRepository::class);
-    //     $allCharacters = $characterRepository->findAll();
-    //     $randomCharacter = $allCharacters[array_rand($allCharacters)];
+    public function testGetOneBackground(): void
+    {
+        $client = static::createClient();
+        $backgroundRepository = static::getContainer()->get(BackgroundRepository::class);
+        $allBackgrounds = $backgroundRepository->findAll();
+        $randomBackground = $allBackgrounds[array_rand($allBackgrounds)];
         
-    //     $crawler = $client->request('GET', 'api/characters/'.$randomCharacter->getId());
-    //     $response = $client->getResponse()->getContent();
+        $crawler = $client->request('GET', 'api/backgrounds/'.$randomBackground->getId());
+        $response = $client->getResponse()->getContent();
 
-    //     $total = json_decode($response)->total;
-    //     $data = json_decode($response)->data;
+        $total = json_decode($response)->total;
+        $data = json_decode($response)->data;
         
-    //     $this->assertResponseIsSuccessful();
-    //     $this->assertEquals($total, 1);
-    //     $this->assertEquals($data->id, $randomCharacter->getId());
-    // }
+        $this->assertResponseIsSuccessful();
+        $this->assertEquals($total, 1);
+        $this->assertEquals($data->id, $randomBackground->getId());
+    }
     
 }

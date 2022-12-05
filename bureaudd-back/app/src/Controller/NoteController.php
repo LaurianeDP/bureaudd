@@ -27,14 +27,14 @@ class NoteController extends AbstractController
         ]);
     }
 
-    // #[Route('/api/characters/{characterId}', name: 'api_character', requirements: ['id' => '\d+'], methods: ['GET'])]
-    // #[ParamConverter('character', options: ['mapping' => ['characterId' => 'id']])]
-    // public function getOneCharacter(SerializerInterface $serialiser, Character $character): JsonResponse
-    // {
-    //     $JsonCharacter = $serialiser->serialize($character, 'json', ['groups' => 'getCharacters']);
-    //     return new JsonResponse([
-    //         'data' => json_decode($JsonCharacter),
-    //         'total' => 1,
-    //     ], Response::HTTP_OK, ['accept' => 'json']);
-    // }
+    #[Route('/api/notes/{noteId}', name: 'api_note', requirements: ['id' => '\d+'], methods: ['GET'])]
+    #[ParamConverter('note', options: ['mapping' => ['noteId' => 'id']])]
+    public function getOneNote(SerializerInterface $serialiser, Note $note): JsonResponse
+    {
+        $JsonNote = $serialiser->serialize($note, 'json', ['groups' => 'getNotes']);
+        return new JsonResponse([
+            'data' => json_decode($JsonNote),
+            'total' => 1,
+        ], Response::HTTP_OK, ['accept' => 'json']);
+    }
 }

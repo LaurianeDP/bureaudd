@@ -23,22 +23,22 @@ class NoteControllerTest extends WebTestCase
         $this->assertEquals($total, $totalNotes);
     }
     
-    // public function testGetOneCharacter(): void
-    // {
-    //     $client = static::createClient();
-    //     $characterRepository = static::getContainer()->get(CharacterRepository::class);
-    //     $allCharacters = $characterRepository->findAll();
-    //     $randomCharacter = $allCharacters[array_rand($allCharacters)];
+    public function testGetOneNote(): void
+    {
+        $client = static::createClient();
+        $noteRepository = static::getContainer()->get(NoteRepository::class);
+        $allNotes = $noteRepository->findAll();
+        $randomNote = $allNotes[array_rand($allNotes)];
         
-    //     $crawler = $client->request('GET', 'api/characters/'.$randomCharacter->getId());
-    //     $response = $client->getResponse()->getContent();
+        $crawler = $client->request('GET', 'api/notes/'.$randomNote->getId());
+        $response = $client->getResponse()->getContent();
 
-    //     $total = json_decode($response)->total;
-    //     $data = json_decode($response)->data;
+        $total = json_decode($response)->total;
+        $data = json_decode($response)->data;
         
-    //     $this->assertResponseIsSuccessful();
-    //     $this->assertEquals($total, 1);
-    //     $this->assertEquals($data->id, $randomCharacter->getId());
-    // }
+        $this->assertResponseIsSuccessful();
+        $this->assertEquals($total, 1);
+        $this->assertEquals($data->id, $randomNote->getId());
+    }
     
 }

@@ -69,5 +69,33 @@ class UserControllerTest extends WebTestCase
         $this->assertEquals($total, $randomUserCharacters);
     }
 
+    public function testGetActiveCharacterOfOneUser(): void
+    {
+        $client = static::createClient();
+
+        $characterRepository = static::getContainer()->get(CharacterRepository::class);
+        $userRepository = static::getContainer()->get(UserRepository::class);
+        
+        $allUsers = $userRepository->findAll();
+        $randomUser = $allUsers[array_rand($allUsers)];
+        
+        do {
+            $randomUser = $allUsers[array_rand($allUsers)];
+        } while (count($randomUser->getCharacters()) === 0);
+        
+        $randomUserCharacters = $randomUser->getCharacters();
+        $randomCharacter = $randomUserCharacters[array_rand($randomUserCharacters)];
+        $randomCharacter->setActive(true);
+        
+        $crawler = $client->request('GET', 'api/users/'.$randomUser->getId().'/activeCharacter');
+        $response = $client->getResponse()->getContent();
+
+        $total = json_decode($response)->total;
+        $data = json_decode($response)->data;
+        
+        $this->assertResponseIsSuccessful();
+        $this->assertEquals($total, count($randomUserCharacters));
+    }
+
 
 }

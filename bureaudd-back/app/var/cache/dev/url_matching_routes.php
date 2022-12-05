@@ -25,19 +25,45 @@ return [
         0 => '{^(?'
                 .'|/_error/(\\d+)(?:\\.([^/]++))?(*:35)'
                 .'|/api/(?'
-                    .'|characters/([^/]++)(*:69)'
+                    .'|backgrounds/([^/]++)(*:70)'
+                    .'|c(?'
+                        .'|ampaigns/([^/]++)(*:98)'
+                        .'|lasses/([^/]++)(*:120)'
+                        .'|haracters/([^/]++)(*:146)'
+                    .')'
+                    .'|f(?'
+                        .'|aqs/([^/]++)(*:171)'
+                        .'|eedbacks/([^/]++)(*:196)'
+                    .')'
+                    .'|notes/([^/]++)(*:219)'
+                    .'|races/([^/]++)(*:241)'
+                    .'|s(?'
+                        .'|kills/([^/]++)(*:267)'
+                        .'|pells/([^/]++)(*:289)'
+                    .')'
+                    .'|transformations/([^/]++)(*:322)'
                     .'|users/([^/]++)(?'
-                        .'|(*:93)'
-                        .'|/characters(*:111)'
+                        .'|(*:347)'
+                        .'|/characters(*:366)'
                     .')'
                 .')'
             .')/?$}sDu',
     ],
     [ // $dynamicRoutes
         35 => [[['_route' => '_preview_error', '_controller' => 'error_controller::preview', '_format' => 'html'], ['code', '_format'], null, null, false, true, null]],
-        69 => [[['_route' => 'api_character', '_controller' => 'App\\Controller\\CharacterController::getOneCharacter'], ['characterId'], ['GET' => 0], null, false, true, null]],
-        93 => [[['_route' => 'api_user', '_controller' => 'App\\Controller\\UserController::getOneUser'], ['userId'], ['GET' => 0], null, false, true, null]],
-        111 => [
+        70 => [[['_route' => 'api_background', '_controller' => 'App\\Controller\\BackgroundController::getOneBackground'], ['backgroundId'], ['GET' => 0], null, false, true, null]],
+        98 => [[['_route' => 'api_campaign', '_controller' => 'App\\Controller\\CampaignController::getOneCampaing'], ['campaignId'], ['GET' => 0], null, false, true, null]],
+        120 => [[['_route' => 'api_character_class', '_controller' => 'App\\Controller\\CharacterClassController::getOneCharacter'], ['classId'], ['GET' => 0], null, false, true, null]],
+        146 => [[['_route' => 'api_character', '_controller' => 'App\\Controller\\CharacterController::getOneCharacter'], ['characterId'], ['GET' => 0], null, false, true, null]],
+        171 => [[['_route' => 'api_faq', '_controller' => 'App\\Controller\\FAQController::getOneFaq'], ['faqId'], ['GET' => 0], null, false, true, null]],
+        196 => [[['_route' => 'api_feedback', '_controller' => 'App\\Controller\\FeedbackController::getOneFeedback'], ['feedbackId'], ['GET' => 0], null, false, true, null]],
+        219 => [[['_route' => 'api_note', '_controller' => 'App\\Controller\\NoteController::getOneNote'], ['noteId'], ['GET' => 0], null, false, true, null]],
+        241 => [[['_route' => 'api_race', '_controller' => 'App\\Controller\\RaceController::getOneCharacter'], ['raceId'], ['GET' => 0], null, false, true, null]],
+        267 => [[['_route' => 'api_skill', '_controller' => 'App\\Controller\\SkillController::getOneSkill'], ['skillId'], ['GET' => 0], null, false, true, null]],
+        289 => [[['_route' => 'api_spell', '_controller' => 'App\\Controller\\SpellController::getOneSpell'], ['spellId'], ['GET' => 0], null, false, true, null]],
+        322 => [[['_route' => 'api_transformation', '_controller' => 'App\\Controller\\TransformationController::getOneTransformation'], ['transformationId'], ['GET' => 0], null, false, true, null]],
+        347 => [[['_route' => 'api_user', '_controller' => 'App\\Controller\\UserController::getOneUser'], ['userId'], ['GET' => 0], null, false, true, null]],
+        366 => [
             [['_route' => 'api_user_characters', '_controller' => 'App\\Controller\\UserController::getCharactersOfOneUser'], ['userId'], ['GET' => 0], null, false, false, null],
             [null, null, null, null, false, false, 0],
         ],

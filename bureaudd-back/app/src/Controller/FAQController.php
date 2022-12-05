@@ -27,14 +27,14 @@ class FAQController extends AbstractController
         ]);
     }
 
-    // #[Route('/api/characters/{characterId}', name: 'api_character', requirements: ['id' => '\d+'], methods: ['GET'])]
-    // #[ParamConverter('character', options: ['mapping' => ['characterId' => 'id']])]
-    // public function getOneCharacter(SerializerInterface $serialiser, Character $character): JsonResponse
-    // {
-    //     $JsonCharacter = $serialiser->serialize($character, 'json', ['groups' => 'getCharacters']);
-    //     return new JsonResponse([
-    //         'data' => json_decode($JsonCharacter),
-    //         'total' => 1,
-    //     ], Response::HTTP_OK, ['accept' => 'json']);
-    // }
+    #[Route('/api/faqs/{faqId}', name: 'api_faq', requirements: ['id' => '\d+'], methods: ['GET'])]
+    #[ParamConverter('faq', options: ['mapping' => ['faqId' => 'id']])]
+    public function getOneFaq(SerializerInterface $serialiser, Faq $faq): JsonResponse
+    {
+        $JsonFaq = $serialiser->serialize($faq, 'json');
+        return new JsonResponse([
+            'data' => json_decode($JsonFaq),
+            'total' => 1,
+        ], Response::HTTP_OK, ['accept' => 'json']);
+    }
 }

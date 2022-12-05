@@ -23,22 +23,22 @@ class FeedbackControllerTest extends WebTestCase
         $this->assertEquals($total, $totalFeedbacks);
     }
     
-    // public function testGetOneCharacter(): void
-    // {
-    //     $client = static::createClient();
-    //     $characterRepository = static::getContainer()->get(CharacterRepository::class);
-    //     $allCharacters = $characterRepository->findAll();
-    //     $randomCharacter = $allCharacters[array_rand($allCharacters)];
+    public function testGetOneFeedback(): void
+    {
+        $client = static::createClient();
+        $feedbackRepository = static::getContainer()->get(FeedbackRepository::class);
+        $allFeedbacks = $feedbackRepository->findAll();
+        $randomFeedback = $allFeedbacks[array_rand($allFeedbacks)];
         
-    //     $crawler = $client->request('GET', 'api/characters/'.$randomCharacter->getId());
-    //     $response = $client->getResponse()->getContent();
+        $crawler = $client->request('GET', 'api/feedbacks/'.$randomFeedback->getId());
+        $response = $client->getResponse()->getContent();
 
-    //     $total = json_decode($response)->total;
-    //     $data = json_decode($response)->data;
+        $total = json_decode($response)->total;
+        $data = json_decode($response)->data;
         
-    //     $this->assertResponseIsSuccessful();
-    //     $this->assertEquals($total, 1);
-    //     $this->assertEquals($data->id, $randomCharacter->getId());
-    // }
+        $this->assertResponseIsSuccessful();
+        $this->assertEquals($total, 1);
+        $this->assertEquals($data->id, $randomFeedback->getId());
+    }
     
 }

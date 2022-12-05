@@ -23,22 +23,22 @@ class FaqControllerTest extends WebTestCase
         $this->assertEquals($total, $totalFaqs);
     }
     
-    // public function testGetOneCharacter(): void
-    // {
-    //     $client = static::createClient();
-    //     $characterRepository = static::getContainer()->get(CharacterRepository::class);
-    //     $allCharacters = $characterRepository->findAll();
-    //     $randomCharacter = $allCharacters[array_rand($allCharacters)];
+    public function testGetOneFaq(): void
+    {
+        $client = static::createClient();
+        $faqRepository = static::getContainer()->get(FaqRepository::class);
+        $allFaqs = $faqRepository->findAll();
+        $randomFaq = $allFaqs[array_rand($allFaqs)];
         
-    //     $crawler = $client->request('GET', 'api/characters/'.$randomCharacter->getId());
-    //     $response = $client->getResponse()->getContent();
+        $crawler = $client->request('GET', 'api/faqs/'.$randomFaq->getId());
+        $response = $client->getResponse()->getContent();
 
-    //     $total = json_decode($response)->total;
-    //     $data = json_decode($response)->data;
+        $total = json_decode($response)->total;
+        $data = json_decode($response)->data;
         
-    //     $this->assertResponseIsSuccessful();
-    //     $this->assertEquals($total, 1);
-    //     $this->assertEquals($data->id, $randomCharacter->getId());
-    // }
+        $this->assertResponseIsSuccessful();
+        $this->assertEquals($total, 1);
+        $this->assertEquals($data->id, $randomFaq->getId());
+    }
     
 }
