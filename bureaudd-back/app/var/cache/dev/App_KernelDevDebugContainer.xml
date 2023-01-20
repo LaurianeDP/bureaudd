@@ -107,9 +107,6 @@
     <parameter key="session.save_path">/var/www/bureaudd-back/var/cache/dev/sessions</parameter>
     <parameter key="session.metadata.update_threshold">0</parameter>
     <parameter key="data_collector.templates" type="collection"/>
-    <parameter key="doctrine.dbal.logger.chain.class">Doctrine\DBAL\Logging\LoggerChain</parameter>
-    <parameter key="doctrine.dbal.logger.profiling.class">Doctrine\DBAL\Logging\DebugStack</parameter>
-    <parameter key="doctrine.dbal.logger.class">Symfony\Bridge\Doctrine\Logger\DbalLogger</parameter>
     <parameter key="doctrine.dbal.configuration.class">Doctrine\DBAL\Configuration</parameter>
     <parameter key="doctrine.data_collector.class">Doctrine\Bundle\DoctrineBundle\DataCollector\DoctrineDataCollector</parameter>
     <parameter key="doctrine.dbal.connection.event_manager.class">Symfony\Bridge\Doctrine\ContainerAwareEventManager</parameter>
@@ -173,6 +170,7 @@
     <parameter key="doctrine.orm.second_level_cache.cache_configuration.class">Doctrine\ORM\Cache\CacheConfiguration</parameter>
     <parameter key="doctrine.orm.second_level_cache.regions_configuration.class">Doctrine\ORM\Cache\RegionsConfiguration</parameter>
     <parameter key="doctrine.orm.auto_generate_proxy_classes">true</parameter>
+    <parameter key="doctrine.orm.enable_lazy_ghost_objects">false</parameter>
     <parameter key="doctrine.orm.proxy_dir">/var/www/bureaudd-back/var/cache/dev/doctrine/orm/Proxies</parameter>
     <parameter key="doctrine.orm.proxy_namespace">Proxies</parameter>
     <parameter key="doctrine.migrations.preferred_em">null</parameter>
@@ -1642,7 +1640,7 @@
     <service id="annotations.reader" class="Doctrine\Common\Annotations\AnnotationReader">
       <call method="addGlobalIgnoredName">
         <argument>required</argument>
-        <argument type="service" id="annotations.dummy_registry"/>
+        <argument type="service" id="annotations.dummy_registry" on-invalid="ignore"/>
       </call>
     </service>
     <service id="annotations.dummy_registry" class="Doctrine\Common\Annotations\AnnotationRegistry">
@@ -1983,14 +1981,6 @@
     <service id="twig.extension.security_csrf" class="Symfony\Bridge\Twig\Extension\CsrfExtension">
       <tag name="twig.extension"/>
     </service>
-    <service id="doctrine.dbal.logger.chain" class="Doctrine\DBAL\Logging\LoggerChain" abstract="true"/>
-    <service id="doctrine.dbal.logger.profiling" class="Doctrine\DBAL\Logging\DebugStack" abstract="true"/>
-    <service id="doctrine.dbal.logger.backtrace" class="Doctrine\Bundle\DoctrineBundle\Dbal\Logging\BacktraceLogger" abstract="true"/>
-    <service id="doctrine.dbal.logger" class="Symfony\Bridge\Doctrine\Logger\DbalLogger">
-      <tag name="monolog.logger" channel="doctrine"/>
-      <argument>null</argument>
-      <argument type="service" id="debug.stopwatch" on-invalid="null"/>
-    </service>
     <service id="data_collector.doctrine" class="Doctrine\Bundle\DoctrineBundle\DataCollector\DoctrineDataCollector">
       <tag name="data_collector" template="@Doctrine/Collector/db.html.twig" id="db" priority="250"/>
       <argument type="service" id="doctrine"/>
@@ -2181,7 +2171,7 @@
     <service id="doctrine.orm.command.entity_manager_provider" class="Doctrine\Bundle\DoctrineBundle\Orm\ManagerRegistryAwareEntityManagerProvider">
       <argument type="service" id="doctrine"/>
     </service>
-    <service id="doctrine.cache_clear_metadata_command" class="Doctrine\Bundle\DoctrineBundle\Command\Proxy\ClearMetadataCacheDoctrineCommand">
+    <service id="doctrine.cache_clear_metadata_command" class="Doctrine\ORM\Tools\Console\Command\ClearCache\MetadataCommand">
       <tag name="console.command" command="doctrine:cache:clear-metadata"/>
       <tag name="container.no_preload"/>
       <argument type="service" id="doctrine.orm.command.entity_manager_provider"/>
@@ -2189,7 +2179,7 @@
         <argument>doctrine:cache:clear-metadata</argument>
       </call>
     </service>
-    <service id="doctrine.cache_clear_query_cache_command" class="Doctrine\Bundle\DoctrineBundle\Command\Proxy\ClearQueryCacheDoctrineCommand">
+    <service id="doctrine.cache_clear_query_cache_command" class="Doctrine\ORM\Tools\Console\Command\ClearCache\QueryCommand">
       <tag name="console.command" command="doctrine:cache:clear-query"/>
       <tag name="container.no_preload"/>
       <argument type="service" id="doctrine.orm.command.entity_manager_provider"/>
@@ -2197,7 +2187,7 @@
         <argument>doctrine:cache:clear-query</argument>
       </call>
     </service>
-    <service id="doctrine.cache_clear_result_command" class="Doctrine\Bundle\DoctrineBundle\Command\Proxy\ClearResultCacheDoctrineCommand">
+    <service id="doctrine.cache_clear_result_command" class="Doctrine\ORM\Tools\Console\Command\ClearCache\ResultCommand">
       <tag name="console.command" command="doctrine:cache:clear-result"/>
       <tag name="container.no_preload"/>
       <argument type="service" id="doctrine.orm.command.entity_manager_provider"/>
@@ -2205,7 +2195,7 @@
         <argument>doctrine:cache:clear-result</argument>
       </call>
     </service>
-    <service id="doctrine.cache_collection_region_command" class="Doctrine\Bundle\DoctrineBundle\Command\Proxy\CollectionRegionDoctrineCommand">
+    <service id="doctrine.cache_collection_region_command" class="Doctrine\ORM\Tools\Console\Command\ClearCache\CollectionRegionCommand">
       <tag name="console.command" command="doctrine:cache:clear-collection-region"/>
       <tag name="container.no_preload"/>
       <argument type="service" id="doctrine.orm.command.entity_manager_provider"/>
@@ -2213,7 +2203,7 @@
         <argument>doctrine:cache:clear-collection-region</argument>
       </call>
     </service>
-    <service id="doctrine.mapping_convert_command" class="Doctrine\Bundle\DoctrineBundle\Command\Proxy\ConvertMappingDoctrineCommand">
+    <service id="doctrine.mapping_convert_command" class="Doctrine\ORM\Tools\Console\Command\ConvertMappingCommand">
       <tag name="console.command" command="doctrine:mapping:convert"/>
       <tag name="container.no_preload"/>
       <argument type="service" id="doctrine.orm.command.entity_manager_provider"/>
@@ -2221,7 +2211,7 @@
         <argument>doctrine:mapping:convert</argument>
       </call>
     </service>
-    <service id="doctrine.schema_create_command" class="Doctrine\Bundle\DoctrineBundle\Command\Proxy\CreateSchemaDoctrineCommand">
+    <service id="doctrine.schema_create_command" class="Doctrine\ORM\Tools\Console\Command\SchemaTool\CreateCommand">
       <tag name="console.command" command="doctrine:schema:create"/>
       <tag name="container.no_preload"/>
       <argument type="service" id="doctrine.orm.command.entity_manager_provider"/>
@@ -2229,7 +2219,7 @@
         <argument>doctrine:schema:create</argument>
       </call>
     </service>
-    <service id="doctrine.schema_drop_command" class="Doctrine\Bundle\DoctrineBundle\Command\Proxy\DropSchemaDoctrineCommand">
+    <service id="doctrine.schema_drop_command" class="Doctrine\ORM\Tools\Console\Command\SchemaTool\DropCommand">
       <tag name="console.command" command="doctrine:schema:drop"/>
       <tag name="container.no_preload"/>
       <argument type="service" id="doctrine.orm.command.entity_manager_provider"/>
@@ -2237,7 +2227,7 @@
         <argument>doctrine:schema:drop</argument>
       </call>
     </service>
-    <service id="doctrine.ensure_production_settings_command" class="Doctrine\Bundle\DoctrineBundle\Command\Proxy\EnsureProductionSettingsDoctrineCommand">
+    <service id="doctrine.ensure_production_settings_command" class="Doctrine\ORM\Tools\Console\Command\EnsureProductionSettingsCommand">
       <tag name="console.command" command="doctrine:ensure-production-settings"/>
       <tag name="container.no_preload"/>
       <argument type="service" id="doctrine.orm.command.entity_manager_provider"/>
@@ -2245,7 +2235,7 @@
         <argument>doctrine:ensure-production-settings</argument>
       </call>
     </service>
-    <service id="doctrine.clear_entity_region_command" class="Doctrine\Bundle\DoctrineBundle\Command\Proxy\EntityRegionCacheDoctrineCommand">
+    <service id="doctrine.clear_entity_region_command" class="Doctrine\ORM\Tools\Console\Command\ClearCache\EntityRegionCommand">
       <tag name="console.command" command="doctrine:cache:clear-entity-region"/>
       <tag name="container.no_preload"/>
       <argument type="service" id="doctrine.orm.command.entity_manager_provider"/>
@@ -2253,7 +2243,7 @@
         <argument>doctrine:cache:clear-entity-region</argument>
       </call>
     </service>
-    <service id="doctrine.mapping_info_command" class="Doctrine\Bundle\DoctrineBundle\Command\Proxy\InfoDoctrineCommand">
+    <service id="doctrine.mapping_info_command" class="Doctrine\ORM\Tools\Console\Command\InfoCommand">
       <tag name="console.command" command="doctrine:mapping:info"/>
       <tag name="container.no_preload"/>
       <argument type="service" id="doctrine.orm.command.entity_manager_provider"/>
@@ -2261,7 +2251,7 @@
         <argument>doctrine:mapping:info</argument>
       </call>
     </service>
-    <service id="doctrine.clear_query_region_command" class="Doctrine\Bundle\DoctrineBundle\Command\Proxy\QueryRegionCacheDoctrineCommand">
+    <service id="doctrine.clear_query_region_command" class="Doctrine\ORM\Tools\Console\Command\ClearCache\QueryRegionCommand">
       <tag name="console.command" command="doctrine:cache:clear-query-region"/>
       <tag name="container.no_preload"/>
       <argument type="service" id="doctrine.orm.command.entity_manager_provider"/>
@@ -2269,7 +2259,7 @@
         <argument>doctrine:cache:clear-query-region</argument>
       </call>
     </service>
-    <service id="doctrine.query_dql_command" class="Doctrine\Bundle\DoctrineBundle\Command\Proxy\RunDqlDoctrineCommand">
+    <service id="doctrine.query_dql_command" class="Doctrine\ORM\Tools\Console\Command\RunDqlCommand">
       <tag name="console.command" command="doctrine:query:dql"/>
       <tag name="container.no_preload"/>
       <argument type="service" id="doctrine.orm.command.entity_manager_provider"/>
@@ -2277,7 +2267,7 @@
         <argument>doctrine:query:dql</argument>
       </call>
     </service>
-    <service id="doctrine.schema_update_command" class="Doctrine\Bundle\DoctrineBundle\Command\Proxy\UpdateSchemaDoctrineCommand">
+    <service id="doctrine.schema_update_command" class="Doctrine\ORM\Tools\Console\Command\SchemaTool\UpdateCommand">
       <tag name="console.command" command="doctrine:schema:update"/>
       <tag name="container.no_preload"/>
       <argument type="service" id="doctrine.orm.command.entity_manager_provider"/>
@@ -2285,7 +2275,7 @@
         <argument>doctrine:schema:update</argument>
       </call>
     </service>
-    <service id="doctrine.schema_validate_command" class="Doctrine\Bundle\DoctrineBundle\Command\Proxy\ValidateSchemaCommand">
+    <service id="doctrine.schema_validate_command" class="Doctrine\ORM\Tools\Console\Command\ValidateSchemaCommand">
       <tag name="console.command" command="doctrine:schema:validate"/>
       <tag name="container.no_preload"/>
       <argument type="service" id="doctrine.orm.command.entity_manager_provider"/>
@@ -2347,6 +2337,9 @@
       </call>
       <call method="setEntityListenerResolver">
         <argument type="service" id="doctrine.orm.default_entity_listener_resolver"/>
+      </call>
+      <call method="setLazyGhostObjectEnabled">
+        <argument>false</argument>
       </call>
       <call method="setRepositoryFactory">
         <argument type="service" id="doctrine.orm.container_repository_factory"/>
@@ -3433,52 +3426,88 @@
     <service id="doctrine.fixtures.purger.orm_purger_factory" class="Doctrine\Bundle\FixturesBundle\Purger\ORMPurgerFactory">
       <tag name="doctrine.fixtures.purger_factory" alias="default"/>
     </service>
-    <service id="zenstruck_foundry.default_instantiator" class="Zenstruck\Foundry\Instantiator"/>
-    <service id="zenstruck_foundry.faker" class="Faker\Generator">
+    <service id=".zenstruck_foundry.default_instantiator" class="Zenstruck\Foundry\Instantiator"/>
+    <service id=".zenstruck_foundry.faker" class="Faker\Generator">
       <factory class="Faker\Factory" method="create"/>
     </service>
-    <service id="Zenstruck\Foundry\Configuration" class="Zenstruck\Foundry\Configuration" public="true">
+    <service id=".zenstruck_foundry.configuration" class="Zenstruck\Foundry\Configuration" public="true">
       <argument type="collection"/>
       <argument type="collection"/>
       <argument>schema</argument>
       <argument type="collection"/>
       <call method="setManagerRegistry">
-        <argument type="service" id="Zenstruck\Foundry\ChainManagerRegistry"/>
+        <argument type="service" id=".zenstruck_foundry.chain_manager_registry"/>
       </call>
       <call method="setStoryManager">
-        <argument type="service" id="Zenstruck\Foundry\StoryManager"/>
+        <argument type="service" id=".zenstruck_foundry.story_manager"/>
       </call>
       <call method="setModelFactoryManager">
-        <argument type="service" id="Zenstruck\Foundry\ModelFactoryManager"/>
+        <argument type="service" id=".zenstruck_foundry.model_factory_manager"/>
       </call>
       <call method="setInstantiator">
-        <argument type="service" id="zenstruck_foundry.default_instantiator"/>
+        <argument type="service" id=".zenstruck_foundry.default_instantiator"/>
       </call>
       <call method="setFaker">
-        <argument type="service" id="zenstruck_foundry.faker"/>
+        <argument type="service" id=".zenstruck_foundry.faker"/>
       </call>
       <call method="enableDefaultProxyAutoRefresh"/>
     </service>
-    <service id="Zenstruck\Foundry\StoryManager" class="Zenstruck\Foundry\StoryManager">
+    <service id=".zenstruck_foundry.story_manager" class="Zenstruck\Foundry\StoryManager">
       <argument type="tagged_iterator" tag="foundry.story"/>
     </service>
-    <service id="Zenstruck\Foundry\ModelFactoryManager" class="Zenstruck\Foundry\ModelFactoryManager">
+    <service id=".zenstruck_foundry.model_factory_manager" class="Zenstruck\Foundry\ModelFactoryManager">
       <argument type="tagged_iterator" tag="foundry.factory"/>
     </service>
-    <service id="Zenstruck\Foundry\Bundle\Maker\MakeFactory" class="Zenstruck\Foundry\Bundle\Maker\MakeFactory">
-      <tag name="maker.command"/>
-      <argument type="service" id="Zenstruck\Foundry\ChainManagerRegistry"/>
-      <argument type="tagged_iterator" tag="foundry.factory"/>
-    </service>
-    <service id="Zenstruck\Foundry\Bundle\Maker\MakeStory" class="Zenstruck\Foundry\Bundle\Maker\MakeStory">
-      <tag name="maker.command"/>
-    </service>
-    <service id="Zenstruck\Foundry\ChainManagerRegistry" class="Zenstruck\Foundry\ChainManagerRegistry">
+    <service id=".zenstruck_foundry.chain_manager_registry" class="Zenstruck\Foundry\ChainManagerRegistry">
       <argument type="collection">
         <argument type="service" id="doctrine"/>
       </argument>
     </service>
-    <service id="Zenstruck\Foundry\Test\GlobalStateRegistry" class="Zenstruck\Foundry\Test\GlobalStateRegistry" public="true"/>
+    <service id=".zenstruck_foundry.global_state_registry" class="Zenstruck\Foundry\Test\GlobalStateRegistry" public="true"/>
+    <service id=".zenstruck_foundry.maker.factory" class="Zenstruck\Foundry\Bundle\Maker\MakeFactory">
+      <tag name="maker.command"/>
+      <argument type="service" id=".zenstruck_foundry.chain_manager_registry"/>
+      <argument type="service" id=".zenstruck_foundry.maker.factory.factory_class_map"/>
+      <argument type="service" id="kernel"/>
+      <argument type="service" id=".zenstruck_foundry.maker.factory.generator"/>
+      <argument type="service" id=".zenstruck_foundry.maker.factory.autoCompleter"/>
+    </service>
+    <service id=".zenstruck_foundry.maker.factory.orm_default_properties_guesser" class="Zenstruck\Foundry\Bundle\Maker\Factory\ORMDefaultPropertiesGuesser">
+      <tag name="foundry.make_factory.default_properties_guesser"/>
+      <argument type="service" id=".zenstruck_foundry.chain_manager_registry"/>
+      <argument type="service" id=".zenstruck_foundry.maker.factory.factory_class_map"/>
+      <argument type="service" id=".zenstruck_foundry.maker.factory.generator"/>
+    </service>
+    <service id=".zenstruck_foundry.maker.factory.odm_default_properties_guesser" class="Zenstruck\Foundry\Bundle\Maker\Factory\ODMDefaultPropertiesGuesser">
+      <tag name="foundry.make_factory.default_properties_guesser"/>
+      <argument type="service" id=".zenstruck_foundry.chain_manager_registry"/>
+      <argument type="service" id=".zenstruck_foundry.maker.factory.factory_class_map"/>
+      <argument type="service" id=".zenstruck_foundry.maker.factory.generator"/>
+    </service>
+    <service id=".zenstruck_foundry.maker.factory.doctrine_scalar_fields_default_properties_guesser" class="Zenstruck\Foundry\Bundle\Maker\Factory\DoctrineScalarFieldsDefaultPropertiesGuesser">
+      <tag name="foundry.make_factory.default_properties_guesser"/>
+      <argument type="service" id=".zenstruck_foundry.chain_manager_registry"/>
+      <argument type="service" id=".zenstruck_foundry.maker.factory.factory_class_map"/>
+      <argument type="service" id=".zenstruck_foundry.maker.factory.generator"/>
+    </service>
+    <service id=".zenstruck_foundry.maker.factory.object_default_properties_guesser" class="Zenstruck\Foundry\Bundle\Maker\Factory\ObjectDefaultPropertiesGuesser">
+      <tag name="foundry.make_factory.default_properties_guesser"/>
+    </service>
+    <service id=".zenstruck_foundry.maker.story" class="Zenstruck\Foundry\Bundle\Maker\MakeStory">
+      <tag name="maker.command"/>
+    </service>
+    <service id=".zenstruck_foundry.maker.factory.factory_class_map" class="Zenstruck\Foundry\Bundle\Maker\Factory\FactoryClassMap">
+      <argument type="tagged_iterator" tag="foundry.factory"/>
+    </service>
+    <service id=".zenstruck_foundry.maker.factory.generator" class="Zenstruck\Foundry\Bundle\Maker\Factory\FactoryGenerator">
+      <argument type="service" id=".zenstruck_foundry.chain_manager_registry"/>
+      <argument type="service" id="kernel"/>
+      <argument type="tagged_iterator" tag="foundry.make_factory.default_properties_guesser"/>
+      <argument type="service" id=".zenstruck_foundry.maker.factory.factory_class_map"/>
+    </service>
+    <service id=".zenstruck_foundry.maker.factory.autoCompleter" class="Zenstruck\Foundry\Bundle\Maker\Factory\NoPersistanceObjectsAutoCompleter">
+      <argument>/var/www/bureaudd-back</argument>
+    </service>
     <service id="sensio_framework_extra.controller.listener" class="Sensio\Bundle\FrameworkExtraBundle\EventListener\ControllerListener">
       <tag name="kernel.event_subscriber"/>
       <tag name="container.hot_path"/>
@@ -3954,22 +3983,22 @@
       </call>
     </service>
     <service id="maker.auto_command.make_factory" class="Symfony\Bundle\MakerBundle\Command\MakerCommand">
-      <tag name="console.command" command="make:factory" description="Creates a Foundry model factory for a Doctrine entity class"/>
+      <tag name="console.command" command="make:factory" description="Creates a Foundry model factory for a Doctrine entity class or a regular object"/>
       <tag name="container.no_preload"/>
-      <argument type="service" id="Zenstruck\Foundry\Bundle\Maker\MakeFactory"/>
+      <argument type="service" id=".zenstruck_foundry.maker.factory"/>
       <argument type="service" id="maker.file_manager"/>
       <argument type="service" id="maker.generator"/>
       <call method="setName">
         <argument>make:factory</argument>
       </call>
       <call method="setDescription">
-        <argument>Creates a Foundry model factory for a Doctrine entity class</argument>
+        <argument>Creates a Foundry model factory for a Doctrine entity class or a regular object</argument>
       </call>
     </service>
     <service id="maker.auto_command.make_story" class="Symfony\Bundle\MakerBundle\Command\MakerCommand">
       <tag name="console.command" command="make:story" description="Creates a Foundry story"/>
       <tag name="container.no_preload"/>
-      <argument type="service" id="Zenstruck\Foundry\Bundle\Maker\MakeStory"/>
+      <argument type="service" id=".zenstruck_foundry.maker.story"/>
       <argument type="service" id="maker.file_manager"/>
       <argument type="service" id="maker.generator"/>
       <call method="setName">
@@ -3978,12 +4007,6 @@
       <call method="setDescription">
         <argument>Creates a Foundry story</argument>
       </call>
-    </service>
-    <service id=".service_locator.bRdave9" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator"/>
-      <argument type="collection">
-        <argument key="response" type="service_closure" id=".errored..service_locator.bRdave9.Symfony\Component\HttpFoundation\Response"/>
-      </argument>
     </service>
     <service id=".service_locator.xUrKPVU" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
@@ -4167,7 +4190,7 @@
         <argument key="user" type="service_closure" id=".errored..service_locator.BFhVacd.App\Entity\User"/>
       </argument>
     </service>
-    <service id=".service_locator.VkIUy3E" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.6SsYhDk" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Controller\BackgroundController::getBackgrounds" type="service_closure" id=".service_locator.tywWH6A"/>
@@ -4198,10 +4221,8 @@
         <argument key="App\Controller\UserController::getUsers" type="service_closure" id=".service_locator.LwdZKSZ"/>
         <argument key="App\Kernel::loadRoutes" type="service_closure" id=".service_locator.xUrKPVU"/>
         <argument key="App\Kernel::registerContainerConfiguration" type="service_closure" id=".service_locator.xUrKPVU"/>
-        <argument key="App\Kernel::terminate" type="service_closure" id=".service_locator.bRdave9"/>
         <argument key="kernel::loadRoutes" type="service_closure" id=".service_locator.xUrKPVU"/>
         <argument key="kernel::registerContainerConfiguration" type="service_closure" id=".service_locator.xUrKPVU"/>
-        <argument key="kernel::terminate" type="service_closure" id=".service_locator.bRdave9"/>
         <argument key="App\Controller\BackgroundController:getBackgrounds" type="service_closure" id=".service_locator.tywWH6A"/>
         <argument key="App\Controller\BackgroundController:getOneBackground" type="service_closure" id=".service_locator.jdfYUVO"/>
         <argument key="App\Controller\CampaignController:getCampaigns" type="service_closure" id=".service_locator.cCLVzB1"/>
@@ -4230,7 +4251,6 @@
         <argument key="App\Controller\UserController:getUsers" type="service_closure" id=".service_locator.LwdZKSZ"/>
         <argument key="kernel:loadRoutes" type="service_closure" id=".service_locator.xUrKPVU"/>
         <argument key="kernel:registerContainerConfiguration" type="service_closure" id=".service_locator.xUrKPVU"/>
-        <argument key="kernel:terminate" type="service_closure" id=".service_locator.bRdave9"/>
       </argument>
     </service>
     <service id=".service_locator.lLv4pWF" class="Symfony\Component\DependencyInjection\ServiceLocator">
@@ -4566,12 +4586,12 @@
       <argument type="service" id="security.token_storage"/>
     </service>
     <service id="debug.argument_resolver.service.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">
-      <argument type="service" id=".service_locator.VkIUy3E"/>
+      <argument type="service" id=".service_locator.6SsYhDk"/>
     </service>
     <service id="debug.argument_resolver.default.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver"/>
     <service id="debug.argument_resolver.variadic.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver"/>
     <service id="debug.argument_resolver.not_tagged_controller.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver">
-      <argument type="service" id=".service_locator.VkIUy3E"/>
+      <argument type="service" id=".service_locator.6SsYhDk"/>
     </service>
     <service id=".doctrine.orm.default_metadata_driver.inner" class="Doctrine\Persistence\Mapping\Driver\MappingDriverChain">
       <call method="addDriver">
@@ -4579,7 +4599,6 @@
         <argument>App\Entity</argument>
       </call>
     </service>
-    <service id=".errored..service_locator.bRdave9.Symfony\Component\HttpFoundation\Response" class="Symfony\Component\HttpFoundation\Response"/>
     <service id=".errored..service_locator.xUrKPVU.Symfony\Component\Config\Loader\LoaderInterface" class="Symfony\Component\Config\Loader\LoaderInterface"/>
     <service id=".errored..service_locator.jdfYUVO.App\Entity\Background" class="App\Entity\Background"/>
     <service id=".errored..service_locator.a_OSiVO.App\Entity\Campaign" class="App\Entity\Campaign"/>
@@ -4957,7 +4976,7 @@
     <service id=".maker.auto_command.make_factory.lazy" class="Symfony\Component\Console\Command\LazyCommand">
       <argument>make:factory</argument>
       <argument type="collection"/>
-      <argument>Creates a Foundry model factory for a Doctrine entity class</argument>
+      <argument>Creates a Foundry model factory for a Doctrine entity class or a regular object</argument>
       <argument>false</argument>
       <argument type="service_closure" id="maker.auto_command.make_factory"/>
     </service>
@@ -4970,7 +4989,7 @@
     </service>
     <service id="console.command_loader" class="Symfony\Component\Console\CommandLoader\ContainerCommandLoader" public="true">
       <tag name="container.no_preload"/>
-      <argument type="service" id=".service_locator.ZoV5zJc"/>
+      <argument type="service" id=".service_locator.CZsGfaV"/>
       <argument type="collection">
         <argument key="about">console.command.about</argument>
         <argument key="assets:install">console.command.assets_install</argument>
@@ -5062,7 +5081,7 @@
         <argument key="make:story">maker.auto_command.make_story</argument>
       </argument>
     </service>
-    <service id=".service_locator.ZoV5zJc" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.CZsGfaV" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="console.command.about" type="service_closure" id=".console.command.about.lazy"/>
@@ -5254,7 +5273,7 @@
     <service id="security.firewall.context_locator" alias=".service_locator.zJyh7qS"/>
     <service id="Symfony\Component\Security\Core\User\UserCheckerInterface" alias="security.user_checker"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.gSv9zYw" public="true"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.VkIUy3E"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.6SsYhDk"/>
     <service id="doctrine.id_generator_locator" alias=".service_locator.KLVvNIq"/>
     <service id="Psr\Log\LoggerInterface" alias="logger"/>
     <service id=".service_locator.0GV1BZZ" alias=".service_locator.gSv9zYw"/>
@@ -5271,7 +5290,7 @@
     <service id=".service_locator.Wuu0GoS" alias=".service_locator.7Y9N4yj"/>
     <service id=".service_locator.IwR6tnm" alias=".service_locator.LwdZKSZ"/>
     <service id=".service_locator.TdBu7nn" alias=".service_locator.BFhVacd"/>
-    <service id=".service_locator.RG5UoFL" alias=".service_locator.VkIUy3E"/>
+    <service id=".service_locator.Tx5QSrp" alias=".service_locator.6SsYhDk"/>
     <service id=".service_locator.qBCHs1a" alias=".service_locator.QXcJQkF"/>
     <service id=".service_locator._eRAkJb" alias=".service_locator.jIxfAsi"/>
     <service id="event_dispatcher" alias="debug.event_dispatcher" public="true"/>
@@ -5292,7 +5311,6 @@
     <service id="argument_resolver.variadic" alias="debug.argument_resolver.variadic"/>
     <service id="argument_resolver.not_tagged_controller" alias="debug.argument_resolver.not_tagged_controller"/>
     <service id="doctrine.orm.default_metadata_driver" alias=".doctrine.orm.default_metadata_driver"/>
-    <service id=".service_locator.FatRZu2" alias=".service_locator.bRdave9"/>
     <service id=".service_locator.uo5c0SP" alias=".service_locator.xUrKPVU"/>
     <service id=".service_locator.67HaMQO" alias=".service_locator.tywWH6A"/>
     <service id=".service_locator.mQUn01E" alias=".service_locator.jdfYUVO"/>
